@@ -884,8 +884,8 @@ class CTFChallenge {
         const hints = [
             'Look at the Python code block on the page. Sometimes hidden there...',
             'Open developer tools and inspect the page source. Look for hidden comments...',
-            'Check the CTF_HINT_2 comment - it looks like Base64. Try decoding it!',
-            'Find the hidden Caesar cipher in the page. Use "cipher caesar 13 <text>"',
+            'I wonder whats in my directory...',
+            'Looks like theres some encrytped text files',
             'Look for binary data in the decoder.py file and decode it!'
         ];
 
