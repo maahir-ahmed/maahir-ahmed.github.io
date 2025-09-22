@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maahir Ahmed - Computer Science Student</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">&lt;MA&gt;</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#running-for" class="nav-link">Running For</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">
+                    <span class="theme-icon">☀️</span>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title fade-in-up">
+                            <span class="word-reveal">Hi,</span> <span class="word-reveal">I'm</span><br>
+                            <span class="name-glow highlight">Maahir Ahmed</span>
+                        </h1>
+                        <p class="hero-subtitle">Computer Science Student at UNSW</p>
+                        <p class="hero-description">
+                            Passionate about cybersecurity, technology and audio-visual production.
+                            Currently exploring the fascinating world of computer science and software development.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="profile-section">
+                            <div class="profile-image">
+                                <img src="profile.jpg" alt="Maahir Ahmed" class="profile-photo">
+                                <div class="profile-border"></div>
+                            </div>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <div class="dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <span class="file-name">about_me.py</span>
+                                </div>
+                                <div class="code-content">
+                                    <pre><code><span class="keyword">class</span> <span class="class-name">Student</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>):
+        <span class="keyword">self</span>.name = <span class="string">"Maahir Ahmed"</span>
+        <span class="keyword">self</span>.university = <span class="string">"UNSW"</span>
+        <span class="keyword">self</span>.degree = <span class="string">"Computer Science"</span>
+        <span class="keyword">self</span>.year = <span class="number">1</span>
+        <span class="keyword">self</span>.passion = <span class="string">"Cybersecurity"</span>
+        <span class="keyword">self</span>.skills = [<span class="string">"Python"</span>, <span class="string">"C"</span>, <span class="string">"JavaScript"</span>]
+        <span class="hidden-flag"># CTF{H1dd3n_1n_C0d3_B10ck}</span>
+
+    <span class="keyword">def</span> <span class="function">get_goals</span>(<span class="keyword">self</span>):
+        <span class="keyword">return</span> [<span class="string">"Learn"</span>, <span class="string">"Create"</span>, <span class="string">"Explore"</span>]
+
+me = <span class="class-name">Student</span>()</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p class="about-intro">
+                            Hello! I'm Maahir, a 1st Year Computer Science student, I've been with SecSoc since the beginning of this year as part of the Projects Subcomittee and had lots of fun of doing interesting and new projects including:
+                        </p>
+                        <ul class="about-projects">
+                            <li>SecSoc's Scones Hardware Badge</li>
+                            <li>Hosting a beginner friendly PCB Design workshop</li>
+                            <li>Recording and streaming Scones</li>
+                            <li>and a bunch of other fun sidequests</li>
+                        </ul>
+                        <p class="about-side-info">
+                            On the side I love tinkering and fixing electronics, rock climbing, gaming and finding bargains on OzBargain
+                        </p>
+                        <div class="about-details">
+                        </div>
+                    </div>
+                    <div class="image-carousel">
+                        <div class="carousel-container">
+                            <div class="carousel-track" id="carousel-track">
+                                <div class="carousel-slide">
+                                    <img src="images/s8shkHI.JPG" alt="Projects" class="carousel-image">
+                                    <div class="carousel-caption">Projects ❤️</div>
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="images/1750066180591.jpg" alt="Atlassian Site Visit" class="carousel-image">
+                                    <div class="carousel-caption"></div>
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="images/adxBACi.jpg" alt="University Life" class="carousel-image">
+                                    <div class="carousel-caption"></div>
+                                </div>
+                            </div>
+                            <button class="carousel-btn prev" id="carousel-prev">❮</button>
+                            <button class="carousel-btn next" id="carousel-next">❯</button>
+                        </div>
+                        <div class="carousel-indicators" id="carousel-indicators">
+                            <span class="indicator active" data-slide="0"></span>
+                            <span class="indicator" data-slide="1"></span>
+                            <span class="indicator" data-slide="2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What am I running for? Section -->
+        <section id="running-for" class="running-for">
+            <div class="container">
+                <h2 class="section-title">What am I running for?</h2>
+                <div class="positions-grid">
+                    <div class="position-card primary">
+                        <div class="position-header">
+                            <h3>Treasurer</h3>
+                            <span class="preference-badge">First Preference</span>
+                        </div>
+                        <div class="position-content">
+                            <p>As Treasurer, I will bring strong organisational and financial management skills to the society's funds are handled transparently and responsibly and in accordance with Arc standards. I am committed to accurate budgeting, timely reimbursements, and ensuring all events are financially sustainable. I understand the importance of maintaining clear financial records and working closely with the executive team to allocate resources effectively. My goal is to ensure the fair and efficient use of the club's funds, so that the society's finances can fully support our community's growth and activities.</p>
+                            <p>(I spend too much time on a website called OzBargain)</p>
+                        </div>
+                    </div>
+
+                    <div class="position-card secondary">
+                        <div class="position-header">
+                            <h3>Vice President of Internals</h3>
+                            <span class="preference-badge secondary">Second Preference</span>
+                        </div>
+                        <div class="position-content">
+                            <p>In addition, I am also nominating for Vice President of Internals. Through my vast experience in societies and their numerous event operations, I have developed strong coordination, communication, and organisational abilities. I will ensure internal processes run smoothly, from managing subcommittees to supporting executive collaboration. My focus will be on building a supportive internal culture, ensuring all necessary papers and documents are in order, and ensuring that all members feel valued and motivated to contribute.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Let's Connect!</h3>
+                        <p>I'm always open to discussing new opportunities, collaborating on interesting projects,
+                        or just having a chat about technology and computer science.</p>
+
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <div class="contact-icon">📧</div>
+                                <div class="contact-details">
+                                    <h4>Email</h4>
+                                    <a href="mailto:maahirahmed2910@gmail.com">maahirahmed2910@gmail.com</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <div class="contact-icon">💼</div>
+                                <div class="contact-details">
+                                    <h4>LinkedIn</h4>
+                                    <a href="https://www.linkedin.com/in/maahir-ahmed/" target="_blank">linkedin.com/in/maahir-ahmed/</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <div class="contact-icon">💻</div>
+                                <div class="contact-details">
+                                    <h4>GitHub</h4>
+                                    <a href="https://github.com/maahir-ahmed" target="_blank">github.com/maahir-ahmed</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <form>
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Maahir Ahmed. Built with ❤️ and lots of ☕</p>
+                <div class="footer-links">
+                    <a href="#home">Back to Top</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Hidden CTF Elements -->
+    <div id="ctf-stage1" class="ctf-hidden" data-hint="Look for what's hiding in plain sight...">
+        <!-- ROT13 encoded hint: Purpx gur pbqr oybpx sbe uvqqra zrffntrf -->
+        <span class="hidden-message">Check the code block for hidden messages</span>
+    </div>
+
+    <!-- Stage 2: Hidden in comments -->
+    <!-- Well done! Here's your flag: CTF{D3v3l0p3r_T00ls_4r3_C00l} -->
+
+    <!-- Stage 3: CSS-based steganography -->
+    <!-- CTF_HINT_2: VXNlIHRoZSBkZXZlbG9wZXIgdG9vbHMgdG8gaW5zcGVjdCB0aGlzIHBhZ2U= -->
+    <div class="ctf-stage3" data-cipher="UFJQPBTGS">CTF STAGE 3</div>
+
+    <script src="script.js"></script>
+
+    <!-- CTF Terminal -->
+    <div id="ctf-terminal" class="ctf-terminal hidden">
+        <div class="terminal-header">
+            <span class="terminal-title">🔐 CTF Terminal</span>
+            <button class="terminal-close" onclick="closeCTFTerminal()">×</button>
+        </div>
+        <div class="terminal-content">
+            <div class="terminal-output" id="terminal-output">
+                <div class="terminal-line">Welcome to Maahir's Cybersecurity Challenge!</div>
+                <div class="terminal-line">Type 'help' for available commands.</div>
+                <div class="terminal-line"></div>
+            </div>
+            <div class="terminal-input-line">
+                <span class="terminal-prompt">guest@maahir:~$ </span>
+                <input type="text" id="terminal-input" class="terminal-input" autofocus>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTF Progress Tracker -->
+    <div id="ctf-progress" class="ctf-progress hidden">
+        <div class="progress-header">🏆 CTF Progress</div>
+        <div class="progress-stages">
+            <div class="stage" id="stage-1">Stage 1: Source Code</div>
+            <div class="stage" id="stage-2">Stage 2: Developer Tools</div>
+            <div class="stage" id="stage-3">Stage 3: Caesar Cipher</div>
+            <div class="stage" id="stage-4">Stage 4: Binary Decode</div>
+            <div class="stage" id="stage-5">Stage 5: Final Challenge</div>
+        </div>
+        <div class="flags-collected">
+            <span>Flags: </span><span id="flag-count">0</span>/5
+        </div>
+    </div>
+
+</body>
+</html>
