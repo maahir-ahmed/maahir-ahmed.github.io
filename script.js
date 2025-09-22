@@ -309,8 +309,7 @@ function setupContactForm() {
                 return;
             }
 
-            // Since this is a static site, show a message about the form submission
-            showNotification('Thank you for your message! Since this is a static website, please email me directly at your.email@example.com', 'success');
+            showNotification('Thank you for your message! Since this is a static website, please email me directly at maahirahmed2910@gmail.com', 'success');
             form.reset();
         });
     }
