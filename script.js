@@ -405,7 +405,9 @@ function showNotification(message, type = 'info') {
 // Theme toggle functionality
 function setupThemeToggle() {
     const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
     const themeIcon = document.querySelector('.theme-icon');
+    const themeIconMobile = document.querySelector('.theme-icon-mobile');
 
     // Check for saved theme preference or default to dark mode
     const savedTheme = localStorage.getItem('theme');
@@ -423,8 +425,8 @@ function setupThemeToggle() {
         handleNavbarScroll();
     }, 100);
 
-    // Theme toggle click handler
-    themeToggle.addEventListener('click', () => {
+    // Function to handle theme toggle
+    function handleThemeToggle(button) {
         currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
         // Apply theme with smooth transition
@@ -446,20 +448,32 @@ function setupThemeToggle() {
         }, 300);
 
         // Add a subtle animation effect
-        themeToggle.style.transform = 'rotate(360deg)';
-        setTimeout(() => {
-            themeToggle.style.transform = '';
-        }, 300);
-    });
+        if (button) {
+            button.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                button.style.transform = '';
+            }, 300);
+        }
+    }
+
+    // Desktop theme toggle click handler
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => handleThemeToggle(themeToggle));
+    }
+
+    // Mobile theme toggle click handler
+    if (themeToggleMobile) {
+        themeToggleMobile.addEventListener('click', () => handleThemeToggle(themeToggleMobile));
+    }
 
     function updateThemeIcon(theme) {
-        if (theme === 'dark') {
-            themeIcon.textContent = '☀️';
-            themeToggle.setAttribute('aria-label', 'Switch to light mode');
-        } else {
-            themeIcon.textContent = '🌙';
-            themeToggle.setAttribute('aria-label', 'Switch to dark mode');
-        }
+        const icon = theme === 'dark' ? '☀️' : '🌙';
+        const label = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+
+        if (themeIcon) themeIcon.textContent = icon;
+        if (themeIconMobile) themeIconMobile.textContent = icon;
+        if (themeToggle) themeToggle.setAttribute('aria-label', label);
+        if (themeToggleMobile) themeToggleMobile.setAttribute('aria-label', label);
     }
 }
 
