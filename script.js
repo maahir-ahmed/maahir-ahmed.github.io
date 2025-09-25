@@ -773,7 +773,7 @@ class CTFChallenge {
     catFile(filename) {
         switch (filename) {
             case 'secret.txt':
-                this.addTerminalLine('Q1RGe1kwdV9GMHVuZF80bGxfRmw0Z3MhfQ==');
+                this.addTerminalLine('Q1RGe0I0NTM2NF9Vbm00NWszZH0=');
                 this.addTerminalLine('');
                 this.addTerminalLine('Hint: This looks like Base64...');
                 break;
@@ -868,7 +868,7 @@ class CTFChallenge {
             'CTF{D3v3l0p3r_T00ls_4r3_C00l}',
             'CTF{C43s4r_C1ph3r_M4st3r}',
             'CTF{B1n4ry_D3c0d3r}',
-            'CTF{Y0u_F0und_4ll_Fl4gs!}'
+            'CTF{B45364_Unm45k3d}'
         ];
 
         // Normalize flag input (trim whitespace and handle common variations)
