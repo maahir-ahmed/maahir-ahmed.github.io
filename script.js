@@ -15,11 +15,20 @@ class ImageCarousel {
     init() {
         if (!this.track) return;
 
-        this.prevBtn.addEventListener('click', () => this.previousSlide());
-        this.nextBtn.addEventListener('click', () => this.nextSlide());
+        this.prevBtn.addEventListener('click', () => {
+            this.previousSlide();
+            this.resetAutoPlay();
+        });
+        this.nextBtn.addEventListener('click', () => {
+            this.nextSlide();
+            this.resetAutoPlay();
+        });
 
         this.indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => this.goToSlide(index));
+            indicator.addEventListener('click', () => {
+                this.goToSlide(index);
+                this.resetAutoPlay();
+            });
         });
 
         // Auto-play carousel
@@ -58,6 +67,11 @@ class ImageCarousel {
 
     stopAutoPlay() {
         clearInterval(this.autoPlayInterval);
+    }
+
+    resetAutoPlay() {
+        this.stopAutoPlay();
+        this.startAutoPlay();
     }
 }
 

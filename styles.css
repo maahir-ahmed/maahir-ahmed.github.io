@@ -550,9 +550,10 @@ body {
 
 .about-content {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 4rem;
+    grid-template-columns: 1.2fr 1.8fr;
+    gap: 2.5rem;
     align-items: start;
+    max-width: 100%;
 }
 
 .about-intro {
@@ -562,6 +563,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    line-height: 1.7;
 }
 
 .about-intro.visible {
@@ -611,11 +613,17 @@ body {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    line-height: 1.7;
 }
 
 .about-side-info.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.about-text {
+    width: 100%;
+    max-width: none;
 }
 
 .about-details {
@@ -1064,6 +1072,54 @@ body {
     font-weight: 500;
 }
 
+/* Thank You Section */
+.thank-you {
+    padding: var(--section-padding);
+    background: var(--background);
+}
+
+.thank-you-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.thank-you-text {
+    text-align: center;
+}
+
+.thank-you-message {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.thank-you-note {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.thank-you-actions {
+    margin-top: 1.5rem;
+}
+
+.thank-you-cta {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 0;
+}
+
+.hint {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
 /* Contact Section */
 .contact {
     padding: var(--section-padding);
@@ -1438,6 +1494,31 @@ body {
     .position-content p {
         font-size: 0.95rem;
         line-height: 1.5;
+    }
+
+    /* Thank you section mobile improvements */
+    .thank-you-message,
+    .thank-you-note {
+        font-size: 1rem;
+        line-height: 1.5;
+        text-align: center;
+        padding: 0 0.5rem;
+        max-width: calc(100vw - 2rem);
+        box-sizing: border-box;
+    }
+
+    .thank-you-cta {
+        font-size: 1rem;
+        text-align: center;
+        padding: 0 0.5rem;
+    }
+
+    .hint {
+        font-size: 0.85rem;
+        text-align: center;
+        padding: 0 0.5rem;
+        max-width: calc(100vw - 2rem);
+        box-sizing: border-box;
     }
 
     /* Contact section mobile improvements */
