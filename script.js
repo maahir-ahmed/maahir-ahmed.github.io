@@ -300,7 +300,8 @@ function animateCounter(element) {
 
 // Contact form handling
 function setupContactForm() {
-    const form = document.querySelector('.contact-form form');
+    const form = document.getElementById('contact-form');
+    const submitButton = form ? form.querySelector('button[type="submit"]') : null;
 
     if (form) {
         form.addEventListener('submit', function(e) {
@@ -308,8 +309,8 @@ function setupContactForm() {
 
             // Get form data
             const formData = new FormData(form);
-            const name = formData.get('name');
-            const email = formData.get('email');
+            const name = formData.get('from_name');
+            const email = formData.get('from_email');
             const message = formData.get('message');
 
             // Basic validation
@@ -323,8 +324,29 @@ function setupContactForm() {
                 return;
             }
 
-            showNotification('Thank you for your message! Since this is a static website, please email me directly at maahirahmed2910@gmail.com', 'success');
-            form.reset();
+            // Disable submit button and show loading state
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+            }
+
+            // Send email using EmailJS
+            emailjs.sendForm('service_fa1kdsx', 'template_t6ie0qm', form)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    showNotification('Thank you for your message! I\'ll get back to you soon.', 'success');
+                    form.reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    showNotification('Oops! Something went wrong. Please try again or email me directly at maahirahmed2910@gmail.com', 'error');
+                })
+                .finally(function() {
+                    // Re-enable submit button
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Send Message';
+                    }
+                });
         });
     }
 }
