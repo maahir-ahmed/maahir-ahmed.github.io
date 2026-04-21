@@ -1,4 +1,4 @@
-import { useVisible } from '../hooks/useVisible';
+import { useVisible } from '../../hooks/useVisible';
 
 const SKILL_GROUPS = [
   {

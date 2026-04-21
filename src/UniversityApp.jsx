@@ -2,26 +2,29 @@
 
 import { useState, useCallback } from 'react';
 import Navbar from './components/shared/Navbar';
-import ProductionHero from './components/production/ProductionHero';
-import ProductionCredits from './components/production/ProductionCredits';
-import ProductionLogoScroller from './components/production/ProductionLogoScroller';
-import ProductionSkills from './components/production/ProductionSkills';
+import UniversityHero from './components/university/UniversityHero';
+import UniversityEducation from './components/university/UniversityEducation';
+import UniversitySocieties from './components/university/UniversitySocieties';
+import UniversityVolunteering from './components/university/UniversityVolunteering';
+import UniversityCoursework from './components/university/UniversityCoursework';
 import Contact from './components/shared/Contact';
 import Footer from './components/shared/Footer';
 import Notification from './components/shared/Notification';
 import { useTheme } from './hooks/useTheme';
 import { useScrollSpy } from './hooks/useScrollSpy';
 
-const SECTIONS  = ['home', 'credits', 'skills', 'contact'];
+const SECTIONS  = ['home', 'education', 'coursework', 'societies', 'volunteering', 'contact'];
 const NAV_LINKS = [
-  { href: '#home',    label: 'Home'    },
-  { href: '#credits', label: 'My Work' },
-  { href: '#skills',  label: 'Skills'  },
-  { href: '#contact', label: 'Contact' },
-  { href: '/',        label: '← Back'  },
+  { href: '#home',         label: 'Home'        },
+  { href: '#education',    label: 'Education'   },
+  { href: '#coursework',   label: 'Coursework'  },
+  { href: '#societies',    label: 'Societies'   },
+  { href: '#volunteering', label: 'Volunteering' },
+  { href: '#contact',      label: 'Contact'     },
+  { href: '/',             label: '← Back'      },
 ];
 
-export default function ProductionApp() {
+export default function UniversityApp() {
   const { theme, toggleTheme } = useTheme();
   const activeSection = useScrollSpy(SECTIONS);
   const [notification, setNotification] = useState(null);
@@ -41,10 +44,11 @@ export default function ProductionApp() {
         navLinks={NAV_LINKS}
       />
       <main>
-        <ProductionHero />
-        <ProductionCredits />
-        <ProductionLogoScroller />
-        <ProductionSkills />
+        <UniversityHero />
+        <UniversityEducation />
+        <UniversityCoursework />
+        <UniversitySocieties />
+        <UniversityVolunteering />
         <Contact showNotification={showNotification} />
       </main>
       <Footer />

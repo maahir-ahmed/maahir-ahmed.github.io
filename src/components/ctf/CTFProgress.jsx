@@ -9,7 +9,7 @@ const STAGE_LABELS = [
 export default function CTFProgress({ flags, totalFlags = 5 }) {
   return (
     <div className="ctf-progress">
-      <div className="progress-header">🏆 CTF Progress</div>
+      <div className="progress-header">CTF Progress</div>
       <div className="progress-stages">
         {STAGE_LABELS.map((label, i) => (
           <div key={i} className={`stage${i < flags.size ? ' completed' : ''}`}>

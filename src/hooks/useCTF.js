@@ -61,7 +61,7 @@ function decodeData(text) {
       try {
         const decoded = atob(dataStr);
         const lines = [`Decoded: ${decoded}`];
-        if (decoded.includes('CTF{')) lines.push('🎉 Flag found! Use "flag <flag>" to submit it.');
+        if (decoded.includes('CTF{')) lines.push('Flag found! Use "flag <flag>" to submit it.');
         return lines;
       } catch {
         return ['Invalid Base64 string'];
@@ -74,7 +74,7 @@ function decodeData(text) {
           result += String.fromCharCode(parseInt(binary.substr(i, 8), 2));
         }
         const lines = [`Decoded: ${result}`];
-        if (result.includes('CTF{')) lines.push('🎉 Flag found! Use "flag <flag>" to submit it.');
+        if (result.includes('CTF{')) lines.push('Flag found! Use "flag <flag>" to submit it.');
         return lines;
       } catch {
         return ['Invalid binary string'];
@@ -99,7 +99,7 @@ function cipherData(text) {
       }
     }
     const lines = [`Decrypted: ${result}`];
-    if (result.includes('CTF{')) lines.push('🎉 Flag found! Use "flag <flag>" to submit it.');
+    if (result.includes('CTF{')) lines.push('Flag found! Use "flag <flag>" to submit it.');
     return lines;
   }
   return ['Supported ciphers: caesar', 'Usage: cipher caesar <shift> <text>'];
@@ -120,10 +120,10 @@ export function useCTF(showNotification) {
     setTerminalVisible(true);
     setProgressVisible(true);
     addLines([
-      '🔐 CTF Challenge Activated!',
+      'CTF Challenge Activated!',
       'Find 5 hidden flags on this website.',
       '',
-      '📝 How to submit flags:',
+      'How to submit flags:',
       '   flag CTF{YourFlagHere}',
       '',
       'Type "hint" for your first clue...',
@@ -134,7 +134,7 @@ export function useCTF(showNotification) {
     setLogoClickCount(prev => {
       const newCount = prev + 1;
       if (newCount === 5) {
-        showNotification('🔓 CTF CHALLENGE UNLOCKED! Cybersecurity mode activated', 'success');
+        showNotification('CTF CHALLENGE UNLOCKED! Cybersecurity mode activated', 'success');
         setTimeout(activateCTF, 1500);
         return 0;
       }
@@ -163,7 +163,7 @@ export function useCTF(showNotification) {
           '  - clear - Clear terminal',
           '  - exit - Close terminal',
           '',
-          '💡 Tip: Start with "hint" to get your first clue!',
+          'Tip: Start with "hint" to get your first clue!',
         );
         break;
       case 'ls':
@@ -190,21 +190,21 @@ export function useCTF(showNotification) {
         if (VALID_FLAGS.includes(normalizedFlag)) {
           setFlags(prev => {
             if (prev.has(normalizedFlag)) {
-              addLines([...output, '❌ Flag already submitted!']);
+              addLines([...output, 'Flag already submitted!']);
               return prev;
             }
             const newFlags = new Set(prev);
             newFlags.add(normalizedFlag);
-            const lines = [...output, `✅ Correct flag! Progress: ${newFlags.size}/5`];
+            const lines = [...output, `Correct flag! Progress: ${newFlags.size}/5`];
             if (newFlags.size === 5) {
               lines.push(
-                '🎉🎉🎉 CONGRATULATIONS! 🎉🎉🎉',
+                'CONGRATULATIONS!',
                 'You have found all 5 flags!',
                 'You are a true cybersecurity enthusiast!',
                 '',
                 "Thanks for playing Maahir's CTF challenge!",
               );
-              setTimeout(() => showNotification('🏆 CTF COMPLETED! You found all flags!', 'success'), 1000);
+              setTimeout(() => showNotification('CTF COMPLETED! You found all flags!', 'success'), 1000);
             }
             addLines(lines);
             return newFlags;
@@ -212,9 +212,9 @@ export function useCTF(showNotification) {
           return;
         }
         output.push(
-          '❌ Invalid flag format or incorrect flag.',
-          '📝 Flag format: CTF{...}',
-          `📥 You entered: "${normalizedFlag}"`,
+          'Invalid flag format or incorrect flag.',
+          'Flag format: CTF{...}',
+          `You entered: "${normalizedFlag}"`,
         );
         break;
       }

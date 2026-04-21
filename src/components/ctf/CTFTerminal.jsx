@@ -25,7 +25,7 @@ export default function CTFTerminal({ lines, onCommand, onClose }) {
   return (
     <div className="ctf-terminal" onClick={() => inputRef.current?.focus()}>
       <div className="terminal-header">
-        <span className="terminal-title">🔐 CTF Terminal</span>
+        <span className="terminal-title">CTF Terminal</span>
         <button className="terminal-close" onClick={onClose}>×</button>
       </div>
       <div className="terminal-content">

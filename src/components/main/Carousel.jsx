@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 const SLIDES = [
-  { src: '/images/SecSocProjects2025.jpg', caption: 'Projects ❤️', alt: 'SecSoc Projects 2025' },
+  { src: '/images/SecSocProjects2025.jpg', caption: 'Projects', alt: 'SecSoc Projects 2025' },
   { src: '/images/NFCBusinessCard.jpg', caption: 'NFC Business Card', alt: 'NFC Business Card' },
   { src: '/images/ProjectsWorkshop.jpg', caption: 'Projects Workshop', alt: 'Projects Workshop' },
   { src: '/images/AV.jpg', caption: 'Scones AV', alt: 'Scones AV' },

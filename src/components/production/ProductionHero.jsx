@@ -26,7 +26,7 @@ export default function ProductionHero() {
               building broadcast infrastructure for esports events and conferences.
             </p>
             <div className="hero-buttons">
-              <a href="#credits" className="btn btn-primary">View Credits</a>
+              <a href="#credits" className="btn btn-primary">View My Work</a>
               <a href="#contact" className="btn btn-secondary">Get In Touch</a>
             </div>
           </div>

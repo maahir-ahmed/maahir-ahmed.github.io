@@ -17,7 +17,7 @@ export default function ThankYou() {
             </p>
             <p className="hint">
               (Psst... there are 2 hidden easter eggs on this site! Try clicking the logo up top
-              left or entering the Konami code 😉)
+              left or entering the Konami code)
             </p>
             <div className="thank-you-actions">
               <p className="thank-you-cta">

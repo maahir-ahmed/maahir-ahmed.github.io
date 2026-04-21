@@ -27,7 +27,7 @@ export default function RunningFor() {
                 Fun Fact: I managed to save SecSoc from a $1,825 bill for streaming Scones by doing
                 it myself and sourcing equipement elsewhere (which I plan to do for 2026), allowing
                 Projects to run our great PCB Workshop and still have $700 left over! (Keep your
-                eyes open for where that&apos;s going 👀)
+                eyes open for where that&apos;s going)
               </p>
             </div>
           </div>

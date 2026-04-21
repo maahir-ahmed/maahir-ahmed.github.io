@@ -2,11 +2,8 @@ import { useState, useEffect } from 'react';
 
 const DEFAULT_NAV_LINKS = [
   { href: '#home',       label: 'Home'       },
-  { href: '#about',      label: 'About'      },
-  { href: '#projects',   label: 'Projects'   },
-  { href: '#skills',     label: 'Skills'     },
-  { href: '#experience', label: 'Experience' },
-  { href: '#contact',    label: 'Contact'    },
+  { href: '/university', label: 'University'        },
+  { href: '/production', label: 'Production' },
 ];
 
 function SunIcon() {

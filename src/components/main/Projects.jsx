@@ -1,10 +1,10 @@
-import { useVisible } from '../hooks/useVisible';
+import { useVisible } from '../../hooks/useVisible';
 
 // ─── Add your projects here ────────────────────────────────
 const PROJECTS = [
   {
     id: 1,
-    icon: '🔒',
+    icon: '',
     title: 'PCSoc Self-Hosted Infrastructure',
     description:
       'Migrated PCSoc from insecure password storage to a self-hosted Vaultwarden instance. ' +
@@ -16,18 +16,7 @@ const PROJECTS = [
   },
   {
     id: 2,
-    icon: '🔧',
-    title: 'Scones Hardware Badge',
-    description:
-      'Custom PCB badge designed for the UNSW Security Society\'s Scones conference. ' +
-      'Features an RP2040 microcontroller, e-ink display, and IR communication between badges.',
-    tech: ['KiCad', 'C', 'RP2040', 'PCB Design'],
-    github: null,
-    demo: null,
-  },
-  {
-    id: 3,
-    icon: '📱',
+    icon: '',
     title: 'NFC Business Card',
     description:
       'Designed an NFC-enabled PCB business card and ran a beginner-friendly workshop ' +
@@ -37,8 +26,8 @@ const PROJECTS = [
     demo: null,
   },
   {
-    id: 4,
-    icon: '💻',
+    id: 3,
+    icon: '',
     title: 'Personal Portfolio',
     description:
       'This site. Built with Next.js and React; dark/light theme, smooth transitions, ' +

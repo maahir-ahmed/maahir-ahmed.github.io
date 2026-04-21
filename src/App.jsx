@@ -1,30 +1,26 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Projects from './components/Projects';
-import Skills from './components/Skills';
-import Experience from './components/Experience';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import CTFTerminal from './components/CTFTerminal';
-import CTFProgress from './components/CTFProgress';
-import Notification from './components/Notification';
+import Navbar from './components/shared/Navbar';
+import Hero from './components/main/Hero';
+import About from './components/main/About';
+import Projects from './components/main/Projects';
+import Skills from './components/main/Skills';
+import Experience from './components/main/Experience';
+import Contact from './components/shared/Contact';
+import Footer from './components/shared/Footer';
+import CTFTerminal from './components/ctf/CTFTerminal';
+import CTFProgress from './components/ctf/CTFProgress';
+import Notification from './components/shared/Notification';
 import { useTheme } from './hooks/useTheme';
 import { useScrollSpy } from './hooks/useScrollSpy';
 import { useCTF } from './hooks/useCTF';
 
 const SECTIONS  = ['home', 'about', 'projects', 'skills', 'experience', 'contact'];
 const NAV_LINKS = [
-  { href: '#home',        label: 'Home'         },
-  { href: '#about',       label: 'About'        },
-  { href: '#projects',    label: 'Projects'     },
-  { href: '#skills',      label: 'Skills'       },
-  { href: '#experience',  label: 'Experience'   },
-  { href: '#contact',     label: 'Contact'      },
-  { href: '/production',  label: 'Production ↗' },
+  { href: '#home',        label: 'Home'       },
+  { href: '/university',  label: 'University'        },
+  { href: '/production',  label: 'Production' },
 ];
 
 export default function App() {
@@ -48,7 +44,7 @@ export default function App() {
       buffer.push(e.keyCode);
       buffer = buffer.slice(-KONAMI.length);
       if (buffer.join(',') === KONAMI.join(',')) {
-        showNotification('🎉 Konami code activated! You found the easter egg!', 'success');
+        showNotification('Konami code activated! You found the easter egg!', 'success');
         document.body.style.animation = 'rainbow 2s ease-in-out';
         setTimeout(() => { document.body.style.animation = ''; }, 2000);
       }

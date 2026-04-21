@@ -6,7 +6,6 @@ const CODE_HTML = `<span class="keyword">class</span> <span class="class-name">D
         <span class="keyword">self</span>.uni      = <span class="string">"UNSW"</span>
         <span class="keyword">self</span>.year     = <span class="number">2</span>
         <span class="keyword">self</span>.focus    = [<span class="string">"Cybersecurity"</span>, <span class="string">"AV Production"</span>]
-        <span class="keyword">self</span>.building = [<span class="string">"Web"</span>, <span class="string">"PCBs"</span>, <span class="string">"Tools"</span>]
         <span class="hidden-flag"># CTF{H1dd3n_1n_C0d3_B10ck}</span>
 
 me = <span class="class-name">Developer</span>()`;
@@ -23,10 +22,10 @@ export default function Hero() {
               <br />
               <span className="name-glow highlight">Maahir Ahmed</span>
             </h1>
-            <p className="hero-subtitle">CS Student &bull; Treasurer @ SecSoc &amp; PCSoc</p>
+            <p className="hero-subtitle">Computer Science Student</p>
             <p className="hero-description">
-              Passionate about cybersecurity, hardware, and live production.
-              Currently studying CS at UNSW while running two society treasuries and building things that matter.
+              Passionate about cybersecurity, gaming, and live production.
+              Currently studying CS at UNSW and always seeking new opportunities to learn and do cool stuff.
             </p>
             <div className="hero-buttons">
               <a href="#projects" className="btn btn-primary">View My Work</a>
