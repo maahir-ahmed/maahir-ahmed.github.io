@@ -1,9 +1,10 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Static export for GitHub Pages deployment
-  // Build output goes to `out/` — deploy that folder via gh-pages or GitHub Actions
-  output: 'export',
-  trailingSlash: true,
-}
+import type { NextConfig } from "next";
 
-export default nextConfig
+const nextConfig: NextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+};
+
+export default nextConfig;
