@@ -58,7 +58,6 @@ build/
 .temp/
 
 # Optional lock files (if you're using npm, yarn, or pnpm)
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
