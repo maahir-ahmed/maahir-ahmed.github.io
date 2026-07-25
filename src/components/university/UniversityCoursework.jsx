@@ -1,11 +1,6 @@
 import { useVisible } from '../../hooks/useVisible';
 
-const COURSES = [
-  { code: 'COMP1511', name: 'Programming Fundamentals', grade: 80 },
-  { code: 'COMP1521', name: 'Computer Systems Fundamentals', grade: 75 },
-];
-
-export default function UniversityCoursework() {
+export default function UniversityCoursework({ courses = [] }) {
   const [ref, visible] = useVisible({ threshold: 0.1 });
 
   return (
@@ -13,7 +8,7 @@ export default function UniversityCoursework() {
       <div className="container">
         <h2 className="section-title">Notable Coursework</h2>
         <div ref={ref} className="skills-grid">
-          {COURSES.map((course, i) => (
+          {courses.map((course, i) => (
             <div
               key={course.code}
               className={`skill-group fade-in${visible ? ' visible' : ''}`}

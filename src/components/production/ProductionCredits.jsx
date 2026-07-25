@@ -1,5 +1,4 @@
 import { useVisible } from '../../hooks/useVisible';
-import { PRODUCTIONS } from '../../data/productions';
 
 const ORGS = [
   {
@@ -14,15 +13,14 @@ const ORGS = [
   },
 ];
 
-const GROUPED = PRODUCTIONS.reduce((acc, p) => {
-  (acc[p.year] = acc[p.year] || []).push(p);
-  return acc;
-}, {});
-
-const YEARS = Object.keys(GROUPED).map(Number).sort((a, b) => b - a);
-
-export default function ProductionCredits() {
+export default function ProductionCredits({ productions = [] }) {
   const [ref, visible] = useVisible({ threshold: 0.05 });
+
+  const grouped = productions.reduce((acc, item) => {
+    (acc[item.year] = acc[item.year] || []).push(item);
+    return acc;
+  }, {});
+  const years = Object.keys(grouped).map(Number).sort((a, b) => b - a);
 
   return (
     <section id="credits" className="projects">
@@ -49,7 +47,7 @@ export default function ProductionCredits() {
             </div>
           </div>
 
-          {YEARS.map((year, yi) => (
+          {years.map((year, yi) => (
             <div
               key={year}
               className={`credits-year-block fade-in${visible ? ' visible' : ''}`}
@@ -57,7 +55,7 @@ export default function ProductionCredits() {
             >
               <h3 className="credits-year-label">{year}</h3>
               <div className="credits-rows">
-                {GROUPED[year].map(credit => (
+                {grouped[year].map(credit => (
                   <a
                     key={credit.slug}
                     href={`/production/${credit.slug}`}

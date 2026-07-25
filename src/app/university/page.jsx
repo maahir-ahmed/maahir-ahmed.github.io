@@ -1,5 +1,8 @@
-import UniversityApp from '../../UniversityApp';
+import UniversityApp from '../../UniversityApp'
+import { getUniversityContent } from '../../lib/content'
 
-export default function UniversityPage() {
-  return <UniversityApp />;
+export const dynamic = 'force-dynamic'
+
+export default async function UniversityPage() {
+  return <UniversityApp content={await getUniversityContent()} />
 }

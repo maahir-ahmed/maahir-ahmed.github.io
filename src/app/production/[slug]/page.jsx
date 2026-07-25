@@ -1,11 +1,12 @@
-import { PRODUCTIONS } from '../../../data/productions';
-import ProductionEventPage from '../../../components/production/ProductionEventPage';
+import { notFound } from 'next/navigation'
+import ProductionEventPage from '../../../components/production/ProductionEventPage'
+import { getProduction } from '../../../lib/content'
 
-export function generateStaticParams() {
-  return PRODUCTIONS.map(p => ({ slug: p.slug }));
-}
+export const dynamic = 'force-dynamic'
 
-export default function EventPage({ params }) {
-  const production = PRODUCTIONS.find(p => p.slug === params.slug) ?? null;
-  return <ProductionEventPage production={production} />;
+export default async function EventPage({ params }) {
+  const { slug } = await params
+  const production = await getProduction(slug)
+  if (!production) notFound()
+  return <ProductionEventPage production={production} />
 }

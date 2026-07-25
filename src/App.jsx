@@ -23,7 +23,8 @@ const NAV_LINKS = [
   { href: '/production',  label: 'Production' },
 ];
 
-export default function App() {
+export default function App({ content }) {
+  const { projects, skills, experience, aboutFacts, settings } = content;
   const { theme, toggleTheme } = useTheme();
   const activeSection = useScrollSpy(SECTIONS);
   const [notification, setNotification] = useState(null);
@@ -63,11 +64,16 @@ export default function App() {
         navLinks={NAV_LINKS}
       />
       <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Experience />
+        <Hero subtitle={settings.heroSubtitle} description={settings.heroDescription} />
+        <About
+          intro={settings.aboutIntro}
+          outro={settings.aboutOutro}
+          bullets={settings.aboutBullets}
+          facts={aboutFacts}
+        />
+        <Projects projects={projects} />
+        <Skills groups={skills} />
+        <Experience entries={experience} />
         <Contact showNotification={showNotification} />
       </main>
       <Footer />

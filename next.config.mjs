@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Static export for GitHub Pages deployment
-  // Build output goes to `out/` — deploy that folder via gh-pages or GitHub Actions
-  output: 'export',
-  trailingSlash: true,
+  // Server-rendered: pages read content from Postgres and /admin edits it.
 }
 
 export default nextConfig

@@ -1,44 +1,6 @@
 import { useVisible } from '../../hooks/useVisible';
 
-// ─── Add your projects here ────────────────────────────────
-const PROJECTS = [
-  {
-    id: 1,
-    icon: '',
-    title: 'PCSoc Self-Hosted Infrastructure',
-    description:
-      'Migrated PCSoc from insecure password storage to a self-hosted Vaultwarden instance. ' +
-      'Deployed and configured Snipe-IT to fully overhaul asset management for equipment ' +
-      'valued at $100,000+. Maintained ongoing self-hosted infrastructure for internal operations.',
-    tech: ['Docker', 'Vaultwarden', 'Snipe-IT', 'Linux', 'Self-Hosted'],
-    github: null,
-    demo: null,
-  },
-  {
-    id: 2,
-    icon: '',
-    title: 'NFC Business Card',
-    description:
-      'Designed an NFC-enabled PCB business card and ran a beginner-friendly workshop ' +
-      'teaching PCB design fundamentals to UNSW security society members.',
-    tech: ['KiCad', 'NFC', 'PCB Design', 'Workshop'],
-    github: null,
-    demo: null,
-  },
-  {
-    id: 3,
-    icon: '',
-    title: 'Personal Portfolio',
-    description:
-      'This site. Built with Next.js and React; dark/light theme, smooth transitions, ' +
-      'a hidden CTF challenge, and a Konami code easter egg. You found this one.',
-    tech: ['Next.js', 'React', 'CSS'],
-    github: 'https://github.com/maahir-ahmed',
-    demo: 'https://maahir-ahmed.github.io',
-  },
-];
-
-export default function Projects() {
+export default function Projects({ projects = [] }) {
   const [ref, visible] = useVisible({ threshold: 0.05 });
 
   return (
@@ -46,13 +8,12 @@ export default function Projects() {
       <div className="container">
         <h2 className="section-title">Projects</h2>
         <div ref={ref} className="project-grid">
-          {PROJECTS.map((project, i) => (
+          {projects.map((project, i) => (
             <article
               key={project.id}
               className={`project-card fade-in${visible ? ' visible' : ''}`}
               style={{ transitionDelay: `${i * 0.08}s` }}
             >
-              <div className="project-icon">{project.icon}</div>
               <h3 className="project-title">{project.title}</h3>
               <p className="project-description">{project.description}</p>
               <div className="project-tech">

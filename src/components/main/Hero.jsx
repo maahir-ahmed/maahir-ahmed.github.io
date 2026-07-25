@@ -10,7 +10,7 @@ const CODE_HTML = `<span class="keyword">class</span> <span class="class-name">D
 
 me = <span class="class-name">Developer</span>()`;
 
-export default function Hero() {
+export default function Hero({ subtitle = '', description = '' }) {
   return (
     <section id="home" className="hero">
       <div className="hero-container">
@@ -22,11 +22,8 @@ export default function Hero() {
               <br />
               <span className="name-glow highlight">Maahir Ahmed</span>
             </h1>
-            <p className="hero-subtitle">Computer Science Student</p>
-            <p className="hero-description">
-              Passionate about cybersecurity, gaming, and live production.
-              Currently studying CS at UNSW and always seeking new opportunities to learn and do cool stuff.
-            </p>
+            <p className="hero-subtitle">{subtitle}</p>
+            <p className="hero-description">{description}</p>
             <div className="hero-buttons">
               <a href="#projects" className="btn btn-primary">View My Work</a>
               <a href="#contact" className="btn btn-secondary">Get In Touch</a>

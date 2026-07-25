@@ -24,7 +24,8 @@ const NAV_LINKS = [
   { href: '/',             label: '← Back'      },
 ];
 
-export default function UniversityApp() {
+export default function UniversityApp({ content }) {
+  const { societies, volunteering, courses, educationFacts, settings } = content;
   const { theme, toggleTheme } = useTheme();
   const activeSection = useScrollSpy(SECTIONS);
   const [notification, setNotification] = useState(null);
@@ -45,10 +46,14 @@ export default function UniversityApp() {
       />
       <main>
         <UniversityHero />
-        <UniversityEducation />
-        <UniversityCoursework />
-        <UniversitySocieties />
-        <UniversityVolunteering />
+        <UniversityEducation
+          intro={settings.educationIntro}
+          bullets={settings.educationBullets}
+          facts={educationFacts}
+        />
+        <UniversityCoursework courses={courses} />
+        <UniversitySocieties entries={societies} />
+        <UniversityVolunteering entries={volunteering} />
         <Contact showNotification={showNotification} />
       </main>
       <Footer />

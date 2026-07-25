@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Experience, Societies and Volunteering render identically, so they share a
+// model and differ only by section.
+enum TimelineSection {
+  EXPERIENCE
+  SOCIETY
+  VOLUNTEERING
+}
+
+model TimelineEntry {
+  id          String          @id @default(cuid())
+  section     TimelineSection
+  period      String
+  role        String
+  org         String
+  description String
+  tags        String[]
+  position    Int             @default(0)
+
+  @@index([section, position])
+}
+
+model Production {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  event       String
+  date        String
+  year        Int
+  role        String
+  description String
+  tech        String[]
+  photos      String[]
+  position    Int      @default(0)
+
+  @@index([position])
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  tech        String[]
+  github      String?
+  demo        String?
+  position    Int      @default(0)
+
+  @@index([position])
+}
+
+model SkillGroup {
+  id       String   @id @default(cuid())
+  category String
+  skills   String[]
+  position Int      @default(0)
+
+  @@index([position])
+}
+
+model Course {
+  id       String @id @default(cuid())
+  code     String
+  name     String
+  grade    Int
+  position Int    @default(0)
+
+  @@index([position])
+}
+
+enum FactSection {
+  ABOUT
+  EDUCATION
+}
+
+model Fact {
+  id       String      @id @default(cuid())
+  section  FactSection
+  label    String
+  value    String
+  position Int         @default(0)
+
+  @@index([section, position])
+}
+
+// Free prose that isn't a repeating list (hero headline, about paragraphs).
+model Setting {
+  key   String @id
+  value String
+}

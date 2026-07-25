@@ -21,7 +21,7 @@ const NAV_LINKS = [
   { href: '/',        label: '← Back'  },
 ];
 
-export default function ProductionApp() {
+export default function ProductionApp({ productions = [] }) {
   const { theme, toggleTheme } = useTheme();
   const activeSection = useScrollSpy(SECTIONS);
   const [notification, setNotification] = useState(null);
@@ -42,7 +42,7 @@ export default function ProductionApp() {
       />
       <main>
         <ProductionHero />
-        <ProductionCredits />
+        <ProductionCredits productions={productions} />
         <ProductionLogoScroller />
         <ProductionSkills />
         <Contact showNotification={showNotification} />
