@@ -86,7 +86,7 @@ export default function App({ content }) {
         />
       )}
       {ctf.progressVisible && (
-        <CTFProgress flags={ctf.flags} totalFlags={5} />
+        <CTFProgress stages={ctf.stages} solved={ctf.solved} total={ctf.total} />
       )}
       {notification && (
         <Notification

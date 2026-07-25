@@ -1,57 +1,15 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
-const VALID_FLAGS = [
-  'CTF{H1dd3n_1n_C0d3_B10ck}',
-  'CTF{D3v3l0p3r_T00ls_4r3_C00l}',
-  'CTF{C43s4r_C1ph3r_M4st3r}',
-  'CTF{B1n4ry_D3c0d3r}',
-  'CTF{B45364_Unm45k3d}',
-];
-
-const HINTS = [
-  'Look at the Python code block on the page. Sometimes hidden there...',
-  'Open developer tools and inspect the page source. Look for hidden comments...',
-  'I wonder whats in my directory...',
-  'Looks like theres some encrytped text files',
-  'Look for binary data in the decoder.py file and decode it!',
-];
-
+// No flag values live here any more. The server decides what is correct; this
+// hook only knows which challenge ids have been solved.
 const INITIAL_LINES = [
   "Welcome to Maahir's Cybersecurity Challenge!",
   "Type 'help' for available commands.",
   '',
 ];
 
-function catFile(filename) {
-  switch (filename) {
-    case 'secret.txt':
-      return [
-        'Q1RGe0I0NTM2NF9Vbm00NWszZH0=',
-        '',
-        'Hint: This looks like Base64...',
-      ];
-    case 'encrypted.txt':
-      return [
-        'Message 1: Gur frperg vf va gur pbqr. Ybbx pybfryl ng gur Clguba oybpx.',
-        'Message 2: PGS{P43f4e_P1cu3e_Z4fg3e}',
-        '',
-        'Hint: Caesar cipher with shift 13...',
-      ];
-    case 'decoder.py':
-      return [
-        '#!/usr/bin/env python3',
-        'import base64',
-        'import binascii',
-        '',
-        '# Binary message:',
-        '# 01000011010101000100011001111011010000100011000101101110001101000111001001111001010111110100010000110011011000110011000001100100001100110111001001111101',
-        '',
-        '# Use: decode binary <binary_string>',
-      ];
-    default:
-      return [`cat: ${filename}: No such file or directory`];
-  }
-}
+// curl is deliberately limited to this site's own challenge endpoints.
+const CURL_ALLOWED = [/^\/api\/ctf(\/|$|\?)/, /^\/robots\.txt$/];
 
 function decodeData(text) {
   const [type, ...data] = text.split(' ');
@@ -106,29 +64,57 @@ function cipherData(text) {
 }
 
 export function useCTF(showNotification) {
-  const [flags, setFlags] = useState(new Set());
+  const [solved, setSolved] = useState([]);
+  const [stages, setStages] = useState([]);
+  const [total, setTotal] = useState(0);
   const [terminalVisible, setTerminalVisible] = useState(false);
   const [progressVisible, setProgressVisible] = useState(false);
   const [terminalLines, setTerminalLines] = useState(INITIAL_LINES);
   const [logoClickCount, setLogoClickCount] = useState(0);
+  const celebrated = useRef(false);
 
   const addLines = useCallback((lines) => {
     setTerminalLines(prev => [...prev, ...(Array.isArray(lines) ? lines : [lines])]);
   }, []);
 
-  const activateCTF = useCallback(() => {
+  const applyState = useCallback((state) => {
+    if (!state) return;
+    setSolved(state.solved ?? []);
+    setStages(state.stages ?? []);
+    setTotal(state.total ?? 0);
+    if (state.total && state.solved?.length === state.total && !celebrated.current) {
+      celebrated.current = true;
+      setTimeout(() => showNotification('CTF COMPLETED! You found every flag!', 'success'), 800);
+    }
+  }, [showNotification]);
+
+  const activateCTF = useCallback(async () => {
     setTerminalVisible(true);
     setProgressVisible(true);
+
+    let state = null;
+    try {
+      const response = await fetch('/api/ctf', { cache: 'no-store' });
+      state = await response.json();
+      applyState(state);
+    } catch {
+      // the terminal still works without the server, just without scoring
+    }
+
+    const done = state?.solved?.length ?? 0;
     addLines([
       'CTF Challenge Activated!',
-      'Find 5 hidden flags on this website.',
+      `Find ${state?.total ?? 7} hidden flags. The server checks them, so reading`,
+      'the JavaScript bundle will not hand you the answers any more.',
       '',
+      done > 0 ? `Progress restored: ${done}/${state.total} already solved.` : '',
       'How to submit flags:',
       '   flag CTF{YourFlagHere}',
       '',
-      'Type "hint" for your first clue...',
-    ]);
-  }, [addLines]);
+      'Some challenges now live on the server. "curl" is your friend.',
+      'Type "hint" for your next clue...',
+    ].filter(Boolean));
+  }, [addLines, applyState]);
 
   const handleLogoClick = useCallback(() => {
     setLogoClickCount(prev => {
@@ -143,7 +129,7 @@ export function useCTF(showNotification) {
     });
   }, [activateCTF, showNotification]);
 
-  const processCommand = useCallback((command) => {
+  const processCommand = useCallback(async (command) => {
     const trimmed = command.trim();
     if (!trimmed) return;
 
@@ -156,90 +142,139 @@ export function useCTF(showNotification) {
           '  - help - Show available commands',
           '  - ls - List files',
           '  - cat <file> - View file contents',
+          "  - curl <path> - Request one of this site's endpoints",
           '  - decode <type> <data> - Decode Base64/Binary',
           '  - cipher caesar <shift> <text> - Caesar cipher',
           '  - flag <flag> - Submit discovered flags',
-          '  - hint - Get progressive hints',
+          '  - hint - Get your next clue',
+          '  - status - Show progress',
           '  - clear - Clear terminal',
           '  - exit - Close terminal',
           '',
-          'Tip: Start with "hint" to get your first clue!',
+          'Tip: the files are served by the backend now. So is the scoring.',
         );
         break;
-      case 'ls':
-        output.push(
-          'total 8',
-          'drwxr-xr-x 2 guest guest 4096 Dec  1 12:00 .',
-          'drwxr-xr-x 3 guest guest 4096 Dec  1 12:00 ..',
-          '-rw-r--r-- 1 guest guest   42 Dec  1 12:00 secret.txt',
-          '-rw-r--r-- 1 guest guest  128 Dec  1 12:00 encrypted.txt',
-          '-rwxr-xr-x 1 guest guest  256 Dec  1 12:00 decoder.py',
-        );
+
+      case 'ls': {
+        try {
+          const response = await fetch('/api/ctf/fs', { cache: 'no-store' });
+          const { files } = await response.json();
+          output.push(...files.map(name => `-rw-r--r-- 1 guest guest  ${name}`));
+        } catch {
+          output.push('ls: could not reach the server');
+        }
         break;
-      case 'cat':
-        output.push(...catFile(args[0]));
+      }
+
+      case 'cat': {
+        if (!args[0]) {
+          output.push('usage: cat <file>');
+          break;
+        }
+        try {
+          const response = await fetch(`/api/ctf/fs?file=${encodeURIComponent(args[0])}`, { cache: 'no-store' });
+          const body = await response.json();
+          output.push(...(body.lines ?? [body.error]));
+        } catch {
+          output.push('cat: could not reach the server');
+        }
         break;
+      }
+
+      case 'curl': {
+        const path = args[0] ?? '';
+        if (!CURL_ALLOWED.some(pattern => pattern.test(path))) {
+          output.push(
+            "curl: this terminal may only request this site's own endpoints.",
+            'Try: curl /api/ctf   or   curl /robots.txt',
+          );
+          break;
+        }
+        try {
+          const response = await fetch(path, { cache: 'no-store' });
+          output.push(`HTTP ${response.status}`);
+          response.headers.forEach((value, key) => output.push(`${key}: ${value}`));
+          output.push('');
+          const text = await response.text();
+          output.push(...text.split('\n'));
+        } catch {
+          output.push(`curl: could not reach ${path}`);
+        }
+        break;
+      }
+
       case 'decode':
         output.push(...decodeData(args.join(' ')));
         break;
+
       case 'cipher':
         output.push(...cipherData(args.join(' ')));
         break;
+
       case 'flag': {
-        const normalizedFlag = args.join(' ').trim();
-        if (VALID_FLAGS.includes(normalizedFlag)) {
-          setFlags(prev => {
-            if (prev.has(normalizedFlag)) {
-              addLines([...output, 'Flag already submitted!']);
-              return prev;
-            }
-            const newFlags = new Set(prev);
-            newFlags.add(normalizedFlag);
-            const lines = [...output, `Correct flag! Progress: ${newFlags.size}/5`];
-            if (newFlags.size === 5) {
-              lines.push(
-                'CONGRATULATIONS!',
-                'You have found all 5 flags!',
-                'You are a true cybersecurity enthusiast!',
-                '',
-                "Thanks for playing Maahir's CTF challenge!",
-              );
-              setTimeout(() => showNotification('CTF COMPLETED! You found all flags!', 'success'), 1000);
-            }
-            addLines(lines);
-            return newFlags;
+        const candidate = args.join(' ').trim();
+        try {
+          const response = await fetch('/api/ctf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ flag: candidate }),
           });
-          return;
+          if (response.status === 429) {
+            output.push('Too many attempts. Wait a moment and try again.');
+            break;
+          }
+          const body = await response.json();
+          applyState(body);
+          if (!body.correct) {
+            output.push('Incorrect flag.', `You entered: "${candidate}"`);
+          } else if (body.already) {
+            output.push('Flag already submitted!');
+          } else {
+            output.push(`Correct! Progress: ${body.solved.length}/${body.total}`);
+            if (body.solved.length === body.total) {
+              output.push('', 'You found every flag. Nicely done.');
+            } else if (body.hint) {
+              output.push(`Next: ${body.hint}`);
+            }
+          }
+        } catch {
+          output.push('Could not reach the scoring server.');
         }
-        output.push(
-          'Invalid flag format or incorrect flag.',
-          'Flag format: CTF{...}',
-          `You entered: "${normalizedFlag}"`,
-        );
         break;
       }
+
       case 'hint': {
-        const hintIndex = flags.size;
-        output.push(
-          hintIndex < HINTS.length
-            ? `Hint ${hintIndex + 1}: ${HINTS[hintIndex]}`
-            : 'No more hints available!',
-        );
+        try {
+          const response = await fetch('/api/ctf', { cache: 'no-store' });
+          const body = await response.json();
+          applyState(body);
+          output.push(body.hint ?? 'No more hints — you have found them all.');
+        } catch {
+          output.push('Could not reach the server for a hint.');
+        }
         break;
       }
+
+      case 'status':
+        output.push(`Solved ${solved.length}/${total || '?'}`);
+        stages.forEach(stage => output.push(`  [${stage.solved ? 'x' : ' '}] ${stage.label}`));
+        break;
+
       case 'clear':
         setTerminalLines(['Terminal cleared.']);
         return;
+
       case 'exit':
         setTerminalVisible(false);
         setProgressVisible(false);
         return;
+
       default:
         output.push(`Command not found: ${cmd}`, 'Type "help" for available commands.');
     }
 
     addLines(output);
-  }, [flags, addLines, showNotification]);
+  }, [addLines, applyState, solved, stages, total]);
 
   const closeTerminal = useCallback(() => {
     setTerminalVisible(false);
@@ -247,7 +282,9 @@ export function useCTF(showNotification) {
   }, []);
 
   return {
-    flags,
+    solved,
+    stages,
+    total,
     terminalVisible,
     progressVisible,
     terminalLines,

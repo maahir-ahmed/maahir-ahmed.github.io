@@ -32,7 +32,7 @@ export function verifyPassword(password, stored) {
   return timingSafeEqual(scryptSync(password, salt, KEY_LENGTH), expectedBuf)
 }
 
-function sign(payload) {
+export function sign(payload) {
   return createHmac('sha256', secret()).update(payload).digest('base64url')
 }
 

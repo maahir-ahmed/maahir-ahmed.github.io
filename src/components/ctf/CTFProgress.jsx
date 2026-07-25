@@ -1,25 +1,18 @@
-const STAGE_LABELS = [
-  'Stage 1: Source Code',
-  'Stage 2: Developer Tools',
-  'Stage 3: Caesar Cipher',
-  'Stage 4: Binary Decode',
-  'Stage 5: Final Challenge',
-];
-
-export default function CTFProgress({ flags, totalFlags = 5 }) {
+// Stages come from the server so the labels can never drift from the flags.
+export default function CTFProgress({ stages = [], solved = [], total = 0 }) {
   return (
     <div className="ctf-progress">
       <div className="progress-header">CTF Progress</div>
       <div className="progress-stages">
-        {STAGE_LABELS.map((label, i) => (
-          <div key={i} className={`stage${i < flags.size ? ' completed' : ''}`}>
-            {label}
+        {stages.map((stage, i) => (
+          <div key={stage.id} className={`stage${stage.solved ? ' completed' : ''}`}>
+            {`Stage ${i + 1}: ${stage.label}`}
           </div>
         ))}
       </div>
       <div className="flags-collected">
         <span>Flags: </span>
-        <span>{flags.size}</span>/{totalFlags}
+        <span>{solved.length}</span>/{total}
       </div>
     </div>
   );
