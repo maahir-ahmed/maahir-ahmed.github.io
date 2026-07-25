@@ -39,13 +39,13 @@ export const CHALLENGES = [
     id: 'headers',
     label: 'Response Headers',
     flag: 'CTF{H34d3rs_T3ll_T4l3s}',
-    hint: 'The terminal talks to a real server now. A response says more than its body — try "curl /api/ctf" and read every line.',
+    hint: 'The terminal talks to a real server now. A response says more than its body — "curl /api/ctf" and read every header.',
   },
   {
     id: 'robots',
     label: 'Forbidden Path',
     flag: 'CTF{R0b0ts_Kn0w_B3st}',
-    hint: 'Every site tells crawlers where not to look. "curl /robots.txt" and go exactly where you are told not to.',
+    hint: 'Security folks always check one well-known file before anything else. "curl /.well-known/security.txt", then go exactly where it says not to.',
   },
 ]
 
@@ -55,6 +55,7 @@ export const TOTAL = CHALLENGES.length
 export const WHISPER_HEADER = 'X-Ctf-Whisper'
 export const WHISPER_FLAG = CHALLENGES.find((c) => c.id === 'headers').flag
 export const VAULT_FLAG = CHALLENGES.find((c) => c.id === 'robots').flag
+export const VAULT_PATH = '/api/ctf/vault'
 
 // A fixed map, not a filesystem read: "cat" can never escape this object.
 export const FILES = {
@@ -82,7 +83,7 @@ export const FILES = {
   'notes.md': [
     '# TODO',
     '- the terminal can reach the server now: try "curl /api/ctf"',
-    '- remember crawlers get told where not to go',
+    '- check /.well-known/security.txt like any decent researcher would',
   ],
 }
 

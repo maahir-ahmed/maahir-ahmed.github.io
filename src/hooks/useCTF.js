@@ -9,7 +9,11 @@ const INITIAL_LINES = [
 ];
 
 // curl is deliberately limited to this site's own challenge endpoints.
-const CURL_ALLOWED = [/^\/api\/ctf(\/|$|\?)/, /^\/robots\.txt$/];
+const CURL_ALLOWED = [
+  /^\/api\/ctf(\/|$|\?)/,
+  /^\/robots\.txt$/,
+  /^\/\.well-known\/security\.txt$/,
+];
 
 function decodeData(text) {
   const [type, ...data] = text.split(' ');
@@ -186,7 +190,7 @@ export function useCTF(showNotification) {
         if (!CURL_ALLOWED.some(pattern => pattern.test(path))) {
           output.push(
             "curl: this terminal may only request this site's own endpoints.",
-            'Try: curl /api/ctf   or   curl /robots.txt',
+            'Try: curl /api/ctf   or   curl /.well-known/security.txt',
           );
           break;
         }
