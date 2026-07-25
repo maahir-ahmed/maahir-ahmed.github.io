@@ -14,4 +14,4 @@ COPY --from=build /app ./
 EXPOSE 3000
 # db push keeps the schema current; the seed only fills tables that are empty,
 # so redeploys never overwrite content edited in /admin.
-CMD ["sh", "-c", "npx prisma db push --skip-generate && node prisma/seed.mjs && npm start"]
+CMD ["sh", "-c", "npx prisma db push && node prisma/seed.mjs && npm start"]
