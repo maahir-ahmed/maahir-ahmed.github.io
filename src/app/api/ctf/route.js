@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import {
   PROGRESS_COOKIE,
+  ROLE_COOKIE,
   WHISPER_FLAG,
   WHISPER_HEADER,
   checkFlag,
@@ -50,14 +51,27 @@ function withWhisper(response) {
   return response
 }
 
+// Plant the role cookie the 'cookie' stage asks players to tamper with, but
+// only when it is missing: overwriting it every GET would silently undo the
+// promotion they just made in dev tools.
+function withRole(request, response) {
+  if (!request.cookies.get(ROLE_COOKIE)) {
+    response.cookies.set(ROLE_COOKIE, 'guest', COOKIE_OPTIONS)
+  }
+  return response
+}
+
 function solvedFrom(request) {
   return decodeProgress(request.cookies.get(PROGRESS_COOKIE)?.value)
 }
 
 export async function GET(request) {
   const solved = solvedFrom(request)
-  return withWhisper(
-    NextResponse.json({ ...publicState(solved), hint: hintFor(solved) }),
+  return withRole(
+    request,
+    withWhisper(
+      NextResponse.json({ ...publicState(solved), hint: hintFor(solved) }),
+    ),
   )
 }
 

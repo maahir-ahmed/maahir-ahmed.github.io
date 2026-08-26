@@ -4,58 +4,73 @@
 import { timingSafeEqual } from 'node:crypto'
 import { sign } from './auth.js'
 
+// The chain is deliberately ordered: every hint ends by pointing at the
+// mechanism the next stage needs. `hintFor` walks it top to bottom.
 export const CHALLENGES = [
   {
     id: 'source',
-    label: 'Source Code',
+    label: 'Hidden in Plain Sight',
     flag: 'CTF{H1dd3n_1n_C0d3_B10ck}',
-    hint: 'Look at the Python code block on the home page. Something is hiding in plain sight.',
+    hint: 'The about_me.py block on the home page renders more text than it shows you. Drag-select the whole block, or just read the page source.',
   },
   {
-    id: 'devtools',
+    id: 'console',
     label: 'Developer Tools',
-    flag: 'CTF{D3v3l0p3r_T00ls_4r3_C00l}',
-    hint: 'View the page source and read the comments the browser does not render.',
+    flag: 'CTF{C0ns0l3_S4ys_H3ll0}',
+    hint: 'The site greets anyone who opens developer tools. The greeting is not on the page — check the Console tab.',
   },
   {
     id: 'base64',
     label: 'Base64',
     flag: 'CTF{B45364_Unm45k3d}',
-    hint: 'Run "ls", then "cat secret.txt". That padding at the end is a giveaway.',
+    hint: 'Back in this terminal: run "ls", then "cat secret.txt". The trailing "=" is the giveaway. Finish it with "decode base64 <text>".',
   },
   {
     id: 'caesar',
     label: 'Caesar Cipher',
     flag: 'CTF{C43s4r_C1ph3r_M4st3r}',
-    hint: '"cat encrypted.txt". Rot the alphabet halfway around: cipher caesar 13 <text>.',
+    hint: '"cat encrypted.txt". Rotate the alphabet halfway around: "cipher caesar 13 <text>".',
   },
   {
     id: 'binary',
     label: 'Binary',
     flag: 'CTF{B1n4ry_D3c0d3r}',
-    hint: '"cat decoder.py" has a long run of ones and zeroes. Eight bits to a character.',
+    hint: '"cat decoder.py" holds a long run of ones and zeroes. Eight bits to a character: "decode binary <bits>".',
   },
   {
     id: 'headers',
     label: 'Response Headers',
     flag: 'CTF{H34d3rs_T3ll_T4l3s}',
-    hint: 'The terminal talks to a real server now. A response says more than its body — "curl /api/ctf" and read every header.',
+    hint: '"cat notes.md". This terminal talks to a real server, and a response is more than its body — run "curl /api/ctf" and read every header it prints.',
   },
   {
     id: 'robots',
     label: 'Forbidden Path',
     flag: 'CTF{R0b0ts_Kn0w_B3st}',
-    hint: 'Security folks always check one well-known file before anything else. "curl /.well-known/security.txt", then go exactly where it says not to.',
+    hint: 'Any researcher checks one well-known file first: "curl /.well-known/security.txt". Then go exactly where it says not to.',
+  },
+  {
+    id: 'cookie',
+    label: 'Privilege Escalation',
+    flag: 'CTF{C00k135_4r3_N0t_4uth}',
+    hint: 'The vault knew you were only a guest — something in your browser told it so. Dev tools, Application, Cookies: promote yourself, then "curl /api/ctf/vault" again.',
   },
 ]
 
 export const TOTAL = CHALLENGES.length
 
+const flagFor = (id) => CHALLENGES.find((c) => c.id === id).flag
+
 // The header flag rides on every /api/ctf response.
 export const WHISPER_HEADER = 'X-Ctf-Whisper'
-export const WHISPER_FLAG = CHALLENGES.find((c) => c.id === 'headers').flag
-export const VAULT_FLAG = CHALLENGES.find((c) => c.id === 'robots').flag
+export const WHISPER_FLAG = flagFor('headers')
+export const VAULT_FLAG = flagFor('robots')
+export const ADMIN_FLAG = flagFor('cookie')
 export const VAULT_PATH = '/api/ctf/vault'
+
+// Deliberately unsigned and client-readable, unlike PROGRESS_COOKIE below.
+// Trusting it is the vulnerability the 'cookie' stage teaches.
+export const ROLE_COOKIE = 'ctf_role'
 
 // A fixed map, not a filesystem read: "cat" can never escape this object.
 export const FILES = {
@@ -82,8 +97,10 @@ export const FILES = {
   ],
   'notes.md': [
     '# TODO',
-    '- the terminal can reach the server now: try "curl /api/ctf"',
-    '- check /.well-known/security.txt like any decent researcher would',
+    '- this terminal reaches the real backend now: try "curl /api/ctf"',
+    '- remember a response is more than its body; read the headers too',
+    '- publish /.well-known/security.txt before a researcher asks for it',
+    '- stop trusting the role cookie in /api/ctf/vault (nobody has done this)',
   ],
 }
 

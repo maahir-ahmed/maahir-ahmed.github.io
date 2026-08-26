@@ -1,12 +1,13 @@
 export const dynamic = 'force-dynamic'
 
-// Real directives for crawlers, and a deliberate breadcrumb for the CTF.
+// Real directives only. The CTF breadcrumb lives in /.well-known/security.txt:
+// Cloudflare serves its own robots.txt for this zone, so a hint here would be
+// invisible in production and duplicate the one that does work.
 export async function GET() {
   const body = [
     'User-agent: *',
     'Allow: /',
     'Disallow: /admin',
-    'Disallow: /api/ctf/vault',
     '',
   ].join('\n')
 

@@ -16,7 +16,6 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      {/* Well done! Here's your flag: CTF{D3v3l0p3r_T00ls_4r3_C00l} */}
       <body>{children}</body>
     </html>
   )

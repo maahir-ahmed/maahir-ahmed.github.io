@@ -1,5 +1,16 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { readFileSync, readdirSync } from 'node:fs'
+
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+function* jsxFiles(dir) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const child = new URL(entry.name + (entry.isDirectory() ? '/' : ''), dir)
+    if (entry.isDirectory()) yield* jsxFiles(child)
+    else if (entry.name.endsWith('.jsx')) yield child
+  }
+}
 
 process.env.SESSION_SECRET = 'y'.repeat(48)
 
@@ -72,4 +83,25 @@ test('hints advance and run out', () => {
   assert.equal(hintFor([]), CHALLENGES[0].hint)
   assert.equal(hintFor([CHALLENGES[0].id]), CHALLENGES[1].hint)
   assert.equal(hintFor(CHALLENGES.map(c => c.id)), null)
+})
+
+// The two client-side stages live in components, not in this module, so guard
+// against them drifting out of sync — or being written in a way that never
+// reaches the browser at all.
+const readSrc = (rel) => readFileSync(new URL(rel, import.meta.url), 'utf8')
+
+test('client-side flags are shipped by the components that own them', () => {
+  const flagOf = (id) => CHALLENGES.find(c => c.id === id).flag
+  assert.match(readSrc('../components/main/Hero.jsx'), new RegExp(escapeRe(flagOf('source'))))
+  assert.match(readSrc('../App.jsx'), new RegExp(`console\\.log\\([^)]*${escapeRe(flagOf('console'))}`))
+})
+
+test('no flag is hidden in a JSX comment', () => {
+  // {/* ... */} is a JS expression comment: it compiles to nothing and never
+  // appears in the served HTML, so a flag placed there is unsolvable.
+  for (const file of jsxFiles(new URL('../', import.meta.url))) {
+    for (const [comment] of readFileSync(file, 'utf8').matchAll(/\{\/\*[\s\S]*?\*\/\}/g)) {
+      assert.equal(comment.includes('CTF{'), false, `unreachable flag in ${file.pathname}`)
+    }
+  }
 })

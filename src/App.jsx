@@ -37,6 +37,16 @@ export default function App({ content }) {
 
   const ctf = useCTF(showNotification);
 
+  // CTF 'console' stage. This has to be a real runtime effect: a JSX
+  // {/* comment */} compiles away and never reaches the served HTML.
+  useEffect(() => {
+    console.log(
+      '%cCTF{C0ns0l3_S4ys_H3ll0}',
+      'color:#22d3ee;font:600 16px/1.6 monospace',
+      '\n\nYou opened dev tools. Submit that in the CTF terminal: flag <value>',
+    );
+  }, []);
+
   // Konami code easter egg
   useEffect(() => {
     const KONAMI = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];

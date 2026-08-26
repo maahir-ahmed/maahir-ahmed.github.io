@@ -108,15 +108,15 @@ export function useCTF(showNotification) {
     const done = state?.solved?.length ?? 0;
     addLines([
       'CTF Challenge Activated!',
-      `Find ${state?.total ?? 7} hidden flags. The server checks them, so reading`,
+      `Find ${state?.total ?? 8} hidden flags. The server checks them, so reading`,
       'the JavaScript bundle will not hand you the answers any more.',
       '',
       done > 0 ? `Progress restored: ${done}/${state.total} already solved.` : '',
       'How to submit flags:',
       '   flag CTF{YourFlagHere}',
       '',
-      'Some challenges now live on the server. "curl" is your friend.',
-      'Type "hint" for your next clue...',
+      'Not every flag is in here: some are in the page, some are on the server.',
+      'Keep dev tools open and "curl" close. Type "hint" for your next clue...',
     ].filter(Boolean));
   }, [addLines, applyState]);
 
@@ -155,7 +155,8 @@ export function useCTF(showNotification) {
           '  - clear - Clear terminal',
           '  - exit - Close terminal',
           '',
-          'Tip: the files are served by the backend now. So is the scoring.',
+          'Tip: files and scoring are both served by the backend. Two flags are',
+          'not in this terminal at all — your browser dev tools hold those.',
         );
         break;
 
