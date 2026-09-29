@@ -436,6 +436,87 @@ textarea:focus-visible {
 .comment     { color: var(--code-comment); }
 .hidden-flag { color: var(--code-bg); } /* invisible: same colour as code bg */
 
+/* ─── Pixel cat perched on about_me.py ────────────────────── */
+.code-perch { position: relative; width: 100%; min-width: 0; }
+
+.pixel-cat {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 100%;
+    z-index: 2;
+}
+
+.cat-sprite {
+    display: block;
+    width: 68px;   /* 17 pixels x 4 */
+    height: 60px;  /* 15 pixels x 4 */
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: var(--text-primary);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cat-sprite svg { display: block; width: 100%; height: 100%; fill: currentColor; }
+
+.cat-eyes { fill: var(--logo-2); animation: cat-blink 5s steps(1) infinite; }
+.cat-tail-a { animation: cat-tail-a 3.2s steps(1) infinite; }
+.cat-tail-b { visibility: hidden; animation: cat-tail-b 3.2s steps(1) infinite; }
+
+/* Sprite frames: eyes shut for a beat, tail flicks twice then rests */
+@keyframes cat-blink  { 0%, 94% { fill: var(--logo-2); } 95%, 100% { fill: currentColor; } }
+@keyframes cat-tail-a { 0%, 55%, 65%, 75%, 85%, 100% { visibility: visible; } 60%, 80% { visibility: hidden; } }
+@keyframes cat-tail-b { 0%, 55%, 65%, 75%, 85%, 100% { visibility: hidden; } 60%, 80% { visibility: visible; } }
+
+.cat-sprite.hop { animation: cat-hop 0.4s steps(2) 1; }
+
+@keyframes cat-hop {
+    0%, 100% { transform: none; }
+    50%      { transform: translateY(-8px); }
+}
+
+/* The hint drops down over the code, so it never covers the photo */
+.cat-bubble {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: -0.5rem;
+    width: max-content;
+    max-width: min(230px, 72vw);
+    padding: 0.5rem 0.7rem;
+    background: var(--surface);
+    color: var(--text-primary);
+    border: 2px solid var(--text-primary);
+    box-shadow: 4px 4px 0 var(--shadow-dark);
+    font-size: 0.88rem;
+    line-height: 1.4;
+    visibility: hidden;
+}
+
+.cat-bubble:empty { padding: 0; border: 0; }
+
+.cat-bubble.show { visibility: visible; animation: bubble-pop 0.16s steps(2) both; }
+
+/* Pixel pointer up to the cat */
+.cat-bubble.show::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 2.1rem;
+    width: 8px;
+    height: 8px;
+    background: var(--text-primary);
+}
+
+/* The code block stays dark in light mode, so the bubble's edge goes light */
+[data-theme="light"] .cat-bubble { border-color: var(--surface); }
+[data-theme="light"] .cat-bubble.show::before { background: var(--surface); }
+
+@keyframes bubble-pop {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: none; opacity: 1; }
+}
+
 /* ─── Sections: heading column + content column ───────────── */
 main > section:not(.hero) {
     padding: var(--section-padding);
@@ -1068,7 +1149,12 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
     .hero-enter,
     .logo-scroller-track,
     .notification-toast,
-    .theme-icon { animation: none; }
+    .theme-icon,
+    .cat-eyes,
+    .cat-tail-a,
+    .cat-tail-b,
+    .cat-sprite.hop,
+    .cat-bubble.show { animation: none; }
 }
 
 /* ─── Responsive ──────────────────────────────────────────── */

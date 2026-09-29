@@ -1,4 +1,5 @@
 import CodeBlock from '../shared/CodeBlock';
+import PixelCat from './PixelCat';
 
 const CODE_HTML = `<span class="keyword">class</span> <span class="class-name">Developer</span>:
     <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>):
@@ -35,7 +36,10 @@ export default function Hero({ subtitle = '', description = '' }) {
                 <img src="/profile.jpg" alt="Maahir Ahmed" className="profile-photo" />
                 <div className="profile-border" />
               </div>
-              <CodeBlock file="about_me.py" html={CODE_HTML} />
+              <div className="code-perch">
+                <PixelCat />
+                <CodeBlock file="about_me.py" html={CODE_HTML} />
+              </div>
             </div>
           </div>
         </div>
