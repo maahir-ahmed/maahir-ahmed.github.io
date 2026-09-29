@@ -43,7 +43,9 @@ const EYES = pixels('e');
 
 const Rects = ({ cells }) => cells.map(([x, y]) => <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" />);
 
-export default function PixelCat() {
+const CTF_HINT = <>Meow. The &lt;MA&gt; logo up top does something after 5 clicks.</>;
+
+export default function PixelCat({ hint = CTF_HINT }) {
   const [talking, setTalking] = useState(false);
   const timer = useRef(null);
 
@@ -58,13 +60,13 @@ export default function PixelCat() {
   return (
     <div className="pixel-cat">
       <p className={`cat-bubble${talking ? ' show' : ''}`} role="status">
-        {talking && <>Meow. The &lt;MA&gt; logo up top does something after 5 clicks.</>}
+        {talking && hint}
       </p>
       <button
         type="button"
         className={`cat-sprite${talking ? ' hop' : ''}`}
         onClick={meow}
-        aria-label="Pixel cat. Tap for a hint"
+        aria-label="Pixel cat. Tap it"
       >
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} shapeRendering="crispEdges" aria-hidden="true">
           <g className="cat-fur"><Rects cells={FUR} /></g>

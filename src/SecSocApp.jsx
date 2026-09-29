@@ -2,6 +2,7 @@
 
 import Navbar from './components/shared/Navbar';
 import Footer from './components/shared/Footer';
+import PixelCat from './components/main/PixelCat';
 import { useTheme } from './hooks/useTheme';
 import { useScrollSpy } from './hooks/useScrollSpy';
 
@@ -59,6 +60,7 @@ export default function SecSocApp() {
             </div>
 
             <figure className="ss-ballot" aria-label="My preferences: 1, VP Internals. 2, VP Technicals.">
+              <PixelCat hint="Meow. Vote 1 Maahir." />
               <figcaption className="ss-ballot-head">
                 <span>SecSoc executive elections</span>
                 <span>Candidate: Maahir Ahmed</span>

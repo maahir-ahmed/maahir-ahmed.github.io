@@ -497,8 +497,8 @@ textarea:focus-visible {
 }
 
 /* The code block stays dark in light mode, so the bubble's edge goes light */
-[data-theme="light"] .cat-bubble { border-color: var(--surface); }
-[data-theme="light"] .cat-bubble.show::before { background: var(--surface); }
+[data-theme="light"] .code-perch .cat-bubble { border-color: var(--surface); }
+[data-theme="light"] .code-perch .cat-bubble.show::before { background: var(--surface); }
 
 @keyframes bubble-pop {
     from { transform: scale(0.8); opacity: 0; }
@@ -1246,6 +1246,7 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* The ballot: the one loud thing on the page */
 .ss-ballot {
+    position: relative; /* perch for the pixel cat */
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 4px;
