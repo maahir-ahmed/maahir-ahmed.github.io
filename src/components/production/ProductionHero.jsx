@@ -6,7 +6,6 @@ const CODE_HTML = `<span class="keyword">class</span> <span class="class-name">P
         <span class="keyword">self</span>.roles      = [<span class="string">"Production Lead"</span>, <span class="string">"Technical Director"</span>]
         <span class="keyword">self</span>.tools      = [<span class="string">"vMix"</span>, <span class="string">"NDI"</span>, <span class="string">"OBS"</span>, <span class="string">"FFMPEG"</span>]
         <span class="keyword">self</span>.speciality = [<span class="string">"Live Broadcast"</span>, <span class="string">"Multi-Camera"</span>]
-        <span class="keyword">self</span>.events     = <span class="number">5</span>  <span class="comment"># and counting</span>
 
 me = <span class="class-name">Producer</span>()`;
 
