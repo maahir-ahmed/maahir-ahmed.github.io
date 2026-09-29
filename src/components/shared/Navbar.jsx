@@ -33,6 +33,7 @@ function MoonIcon() {
 export default function Navbar({ activeSection, theme, toggleTheme, onLogoClick, navLinks = DEFAULT_NAV_LINKS }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [logoClicks, setLogoClicks] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -41,6 +42,13 @@ export default function Navbar({ activeSection, theme, toggleTheme, onLogoClick,
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+
+  // Every click paints the logo the next syntax colour (5 of them, matching
+  // the 5 clicks that open the CTF terminal on the home page).
+  const handleLogoClick = () => {
+    setLogoClicks(n => n + 1);
+    onLogoClick?.();
+  };
 
   const navbarStyle = scrolled
     ? {
@@ -53,10 +61,16 @@ export default function Navbar({ activeSection, theme, toggleTheme, onLogoClick,
     <nav className="navbar" style={navbarStyle}>
       <div className="nav-container">
         <div className="nav-logo">
-          <span className="logo-text" onClick={onLogoClick}>&lt;MA&gt;</span>
+          <span
+            className="logo-text"
+            data-hue={logoClicks ? ((logoClicks - 1) % 5) + 1 : undefined}
+            onClick={handleLogoClick}
+          >
+            &lt;MA&gt;
+          </span>
         </div>
 
-        <ul className={`nav-menu${menuOpen ? ' active' : ''}`}>
+        <ul id="nav-menu" className={`nav-menu${menuOpen ? ' active' : ''}`}>
           {navLinks.map(({ href, label }) => {
             const isSwitch = href.startsWith('/');
             return (

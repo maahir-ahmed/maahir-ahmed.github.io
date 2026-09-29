@@ -40,6 +40,7 @@
     --shadow-dark:          rgba(21, 24, 28, 0.14);
     --navbar-bg:            rgba(244, 245, 246, 0.9);
     --tally:                #d92d2f;
+    --logo-1: #a0603c; --logo-2: #3f7a50; --logo-3: #3a6ea5; --logo-4: #6a55b0; --logo-5: #2d7f85;
 }
 
 /* ─── Dark mode ───────────────────────────────────────────── */
@@ -57,6 +58,8 @@
     --shadow-dark:          rgba(0, 0, 0, 0.55);
     --navbar-bg:            rgba(14, 16, 19, 0.88);
     --tally:                #ff4d4f;
+    --logo-1: var(--code-keyword); --logo-2: var(--code-string); --logo-3: var(--code-number);
+    --logo-4: var(--code-function); --logo-5: var(--code-class);
 }
 
 /* ─── Simultaneous theme transition ──────────────────────────
@@ -144,10 +147,18 @@ textarea:focus-visible {
     font-weight: 600;
     color: var(--text-primary);
     cursor: pointer;
-    transition: opacity 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s ease, opacity 0.2s ease;
 }
 
-.nav-logo .logo-text:hover { opacity: 0.6; }
+.nav-logo .logo-text:hover { opacity: 0.75; }
+
+.logo-text[data-hue="1"] { color: var(--logo-1); }
+.logo-text[data-hue="2"] { color: var(--logo-2); }
+.logo-text[data-hue="3"] { color: var(--logo-3); }
+.logo-text[data-hue="4"] { color: var(--logo-4); }
+.logo-text[data-hue="5"] { color: var(--logo-5); }
 
 .nav-menu {
     display: flex;
