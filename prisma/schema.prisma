@@ -37,6 +37,8 @@ model Production {
   description String
   tech        String[]
   photos      String[]
+  logo        String?  // tournament logo; logoDark replaces it in dark mode
+  logoDark    String?
   position    Int      @default(0)
 
   @@index([position])

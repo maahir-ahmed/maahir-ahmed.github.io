@@ -2,6 +2,7 @@
 
 import Navbar from '../shared/Navbar';
 import Footer from '../shared/Footer';
+import TournamentLogo from './TournamentLogo';
 import { useTheme } from '../../hooks/useTheme';
 
 const NAV_LINKS = [
@@ -32,6 +33,7 @@ export default function ProductionEventPage({ production }) {
 
           <div className="event-header">
             <a href="/production" className="event-back">All productions</a>
+            <TournamentLogo production={production} className="event-logo" />
             <p className="event-date">{production.date}</p>
             <h1 className="event-title">{production.event}</h1>
             <p className="event-role">{production.role}</p>

@@ -82,16 +82,7 @@ me = Developer()`,
             type: 'paragraphs',
             default: "Hi! I'm Maahir! - A Computer Science student at UNSW and Treasurer of both SecSoc and PCSoc. I've spent the last year managing society finances, running hardware workshops, directing live esports broadcasts. I like understanding how systems work at every level, from software all the way down to the silicon.",
           },
-          {
-            key: 'bullets',
-            label: 'Highlights',
-            type: 'lines',
-            default: [
-              'Managed a $20,000 annual budget and $10,000+ in sponsorship at SecSoc',
-              'Deployed Vaultwarden & Snipe-IT for PCSoc, overhauling asset management on $100k+ of equipment',
-              'Directed end-to-end production for Oceanic Prodigies RE:BIRTH as Production Lead / Technical Director',
-            ].join('\n'),
-          },
+          { key: 'bullets', label: 'Highlights', type: 'lines', default: '' },
           {
             key: 'outro',
             label: 'Outro',

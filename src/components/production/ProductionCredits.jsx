@@ -1,3 +1,5 @@
+import TournamentLogo from './TournamentLogo';
+
 export default function ProductionCredits({ text, orgs = [], productions = [] }) {
   const grouped = productions.reduce((acc, item) => {
     (acc[item.year] = acc[item.year] || []).push(item);
@@ -32,6 +34,7 @@ export default function ProductionCredits({ text, orgs = [], productions = [] })
               <div className="credits-rows">
                 {grouped[year].map(credit => (
                   <a key={credit.slug} href={`/production/${credit.slug}`} className="credits-row">
+                    <span className="credit-logo"><TournamentLogo production={credit} className="credit-logo-img" /></span>
                     <span className="credit-date">{credit.date}</span>
                     <span className="credit-event">{credit.event}</span>
                     <span className="credit-role">{credit.role}</span>

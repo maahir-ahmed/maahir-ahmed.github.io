@@ -68,6 +68,8 @@ export const CONTENT_TYPES = [
       { name: 'description', label: 'Description', type: 'textarea', required: true },
       { name: 'tech', label: 'Tech / tags', type: 'list', hint: 'One per line' },
       { name: 'photos', label: 'Photos', type: 'list', hint: 'One path per line, e.g. /productions/slug/a.jpg' },
+      { name: 'logo', label: 'Tournament logo', type: 'url', hint: 'Image path, e.g. /productions/logos/road-2-open.webp' },
+      { name: 'logoDark', label: 'Logo for dark mode', type: 'url', hint: 'Optional. Leave empty if the logo works on both backgrounds.' },
     ],
   },
   {

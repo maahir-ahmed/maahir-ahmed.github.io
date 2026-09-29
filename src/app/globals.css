@@ -699,8 +699,8 @@ main > section:not(.hero) > .container {
 
 .credits-row {
     display: grid;
-    grid-template-columns: 8.5rem minmax(0, 1fr) auto;
-    align-items: baseline;
+    grid-template-columns: 80px 8.5rem minmax(0, 1fr) auto;
+    align-items: center;
     gap: 1.25rem;
     padding: 0.85rem 0;
     text-decoration: none;
@@ -728,7 +728,23 @@ main > section:not(.hero) > .container {
     font-size: 0.9rem;
     color: var(--text-secondary);
     text-align: right;
+    max-width: 17rem; /* long role lists wrap instead of squeezing the event name */
 }
+
+/* Tournament logos: a fixed slot, so rows line up with or without one */
+.credit-logo { display: flex; align-items: center; height: 32px; }
+.credit-logo-img { max-width: 80px; max-height: 32px; object-fit: contain; }
+
+.event-logo {
+    display: block;
+    max-width: min(280px, 100%);
+    max-height: 72px;
+    object-fit: contain;
+    margin-bottom: 1.25rem;
+}
+
+[data-theme="light"] .logo-for-dark,
+[data-theme="dark"] .logo-for-light { display: none; }
 
 /* ─── Logo scroller ───────────────────────────────────────── */
 @keyframes scroll-logos {
@@ -1194,7 +1210,9 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
     .course-list dt { grid-column: 1 / -1; }
     .course-list .course-grade { grid-column: 2; grid-row: 2; }
 
-    .credits-row { grid-template-columns: 1fr; gap: 0.15rem; }
+    .credits-row { grid-template-columns: 56px minmax(0, 1fr); column-gap: 1rem; row-gap: 0.15rem; }
+    .credit-logo { grid-row: span 3; align-self: start; }
+    .credit-logo-img { max-width: 56px; max-height: 28px; }
     .credit-role { text-align: left; }
 
     .ctf-terminal {

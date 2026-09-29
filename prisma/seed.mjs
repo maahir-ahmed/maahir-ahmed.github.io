@@ -488,6 +488,31 @@ const roles = [
   'Producer', 'Director', 'Technical Director', 'Production Lead', 'Tournament Referee',
 ].map((name) => ({ name }))
 
+// Tournament logos (files in public/productions/logos), by production slug
+const L = (name) => `/productions/logos/${name}.webp`
+const pair = (name) => [L(`${name}-light`), L(`${name}-dark`)]
+const tournamentLogos = {
+  'fortress-grassroots-sydney-lan-2': pair('fge'),
+  'fortress-grassroots-sydney-qualifier': pair('fge'),
+  'fortress-grassroots-melbourne-qualifier': pair('fge'),
+  'fortress-grassroots-open-qualifier': pair('fge'),
+  'road-2-new-dawn': [L('road-2-new-dawn')],
+  'road-2-invitational': [L('road-2-invitational')],
+  'road-2-opens-4': [L('road-2-open')],
+  'ezmode-turbo-tuesday-1': pair('ezmode'),
+  'ezmode-turbo-tuesday-2': pair('ezmode'),
+  'ezmode-turbo-tuesday-3': pair('ezmode'),
+  'txg-valorant-circuit-invitational': ['/logos/txg.webp'],
+  'txg-april-circuit': ['/logos/txg.webp'],
+  'wave-oce-smashcon': pair('wave-oce-2026'),
+  'waveoce-smash-con-saturday': pair('wave-oce-2026'),
+  'waveoce-smash-con-sunday': pair('wave-oce-2026'),
+  'waveoce-rising-tides-split-1': pair('rising-tides'),
+  'waveoce-rising-tides-split-2': pair('rising-tides'),
+  'oceanic-prodigies-rebirth': pair('oceanic-prodigies'),
+  'oceanic-prodigies-ii': pair('oceanic-prodigies'),
+  'unsw-intervarsity-esports': [L('aewt-sydney-2026')],
+}
 // Section text needs no seeding: src/lib/pages.js holds the defaults.
 
 function positioned(rows, extra = {}) {
@@ -513,7 +538,11 @@ async function main() {
   await fill('fact', positioned(educationFacts, { section: 'EDUCATION' }), 'education facts', { section: 'EDUCATION' })
   await fill('skillGroup', positioned(skillGroups, { section: 'HOME' }), 'skill groups', { section: 'HOME' })
   await fill('skillGroup', positioned(productionSkills, { section: 'PRODUCTION' }), 'production skills', { section: 'PRODUCTION' })
-  await fill('production', positioned(productions), 'productions')
+  const withLogos = productions.map((p) => {
+    const [logo = null, logoDark = null] = tournamentLogos[p.slug] ?? []
+    return { ...p, logo, logoDark }
+  })
+  await fill('production', positioned(withLogos), 'productions')
   await fill('productionOrg', positioned(productionOrgs), 'production organisations')
   await fill('logo', positioned(logos), 'logos')
   await fill('project', positioned(projects), 'projects')
