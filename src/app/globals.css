@@ -409,7 +409,7 @@ textarea:focus-visible {
 }
 
 .code-content {
-    padding: 1.25rem 1.4rem;
+    padding: 1.25rem 1rem;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     line-height: 1.7;
@@ -1110,7 +1110,8 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
 
     .hero { padding: calc(var(--nav-height) + 3rem) 0 4rem; min-height: 0; }
     .profile-photo { width: 128px; height: 128px; }
-    .code-content { font-size: 0.74rem; padding: 1rem; }
+    .code-header { padding: 0.5rem 0.6rem; }
+    .code-content { font-size: 0.74rem; padding: 0.9rem 0.6rem; }
 
     .spec-list > div,
     .timeline-item { grid-template-columns: 1fr; gap: 0.25rem; }
