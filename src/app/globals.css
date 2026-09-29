@@ -196,8 +196,16 @@ textarea:focus-visible {
 .hamburger {
     display: none;
     flex-direction: column;
-    cursor: pointer;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
+    width: 44px;
+    height: 44px;
+    margin-right: -11px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
 }
 
 .bar {
@@ -865,7 +873,12 @@ main > section:not(.hero) > .container {
     gap: 0.75rem;
 }
 
-.footer a { text-decoration: none; }
+.footer a {
+    display: inline-block;
+    padding: 0.7rem 0;
+    margin: -0.7rem 0;
+    text-decoration: none;
+}
 .footer a:hover { color: var(--text-primary); }
 
 /* ─── Scroll margin for fixed navbar ─────────────────────── */
@@ -1076,6 +1089,7 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
     .hero-container,
     .nav-container { padding: 0 1rem; }
 
+    .nav-container { gap: 0.75rem; }
     .hamburger { display: flex; }
 
     .nav-menu {

@@ -100,14 +100,18 @@ export default function Navbar({ activeSection, theme, toggleTheme, onLogoClick,
           </button>
         </div>
 
-        <div
+        <button
+          type="button"
           className={`hamburger${menuOpen ? ' active' : ''}`}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          aria-controls="nav-menu"
           onClick={() => setMenuOpen(o => !o)}
         >
           <span className="bar" />
           <span className="bar" />
           <span className="bar" />
-        </div>
+        </button>
       </div>
     </nav>
   );
