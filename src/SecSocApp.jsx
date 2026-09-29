@@ -130,15 +130,24 @@ export default function SecSocApp() {
               </p>
             </div>
             <figure className="ss-feature">
-              <img
-                src="/images/SecSocBSides-1600.webp"
-                srcSet="/images/SecSocBSides-800.webp 800w, /images/SecSocBSides-1600.webp 1600w"
-                sizes="(max-width: 1040px) 100vw, 1000px"
-                width="1600"
-                height="1014"
-                loading="lazy"
-                alt="About fifty SecSoc members on the steps at BSides Canberra, holding the Security Society banner"
-              />
+              <div className="ss-feature-media">
+                <img
+                  src="/images/SecSocBSides-1600.webp"
+                  srcSet="/images/SecSocBSides-800.webp 800w, /images/SecSocBSides-1600.webp 1600w"
+                  sizes="(max-width: 1040px) 100vw, 1000px"
+                  width="1600"
+                  height="1014"
+                  loading="lazy"
+                  alt="About fifty SecSoc members on the steps at BSides Canberra, holding the Security Society banner. Maahir is circled: second from the left in the front row, holding the banner"
+                />
+                {/* Coordinates are in the original photo's 2048x1298 pixels */}
+                <svg className="ss-me" viewBox="0 0 2048 1298" aria-hidden="true">
+                  <circle cx="728" cy="672" r="84" />
+                  <path d="M 150 1190 Q 300 850 660 735" />
+                  <path d="M 621 727 L 660 735 L 633 765" />
+                  <text x="52" y="1262">Me</text>
+                </svg>
+              </div>
               <figcaption>SecSoc at BSides Canberra</figcaption>
             </figure>
             <div className="ss-prose">
