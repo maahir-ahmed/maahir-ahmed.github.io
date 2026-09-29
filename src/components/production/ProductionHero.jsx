@@ -13,12 +13,9 @@ export default function ProductionHero() {
     <section id="home" className="hero">
       <div className="hero-container">
         <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title fade-in-up">
-              <span className="word-reveal">Hi,</span>{' '}
-              <span className="word-reveal">I&apos;m</span>
-              <br />
-              <span className="name-glow highlight">Maahir Ahmed</span>
+          <div className="hero-text hero-enter">
+            <h1 className="hero-title">
+              Hi, I&apos;m <span className="hero-name">Maahir Ahmed</span>
             </h1>
             <p className="hero-subtitle">AV &amp; Live Production</p>
             <p className="hero-description">
@@ -26,8 +23,8 @@ export default function ProductionHero() {
               building broadcast infrastructure for esports events and conferences.
             </p>
             <div className="hero-buttons">
-              <a href="#credits" className="btn btn-primary">View My Work</a>
-              <a href="#contact" className="btn btn-secondary">Get In Touch</a>
+              <a href="#credits" className="btn btn-primary">View my work</a>
+              <a href="#contact" className="btn btn-secondary">Get in touch</a>
             </div>
           </div>
 
@@ -39,11 +36,6 @@ export default function ProductionHero() {
               </div>
               <div className="code-block">
                 <div className="code-header">
-                  <div className="dots">
-                    <span className="dot red" />
-                    <span className="dot yellow" />
-                    <span className="dot green" />
-                  </div>
                   <span className="file-name">producer.py</span>
                 </div>
                 <div className="code-content">

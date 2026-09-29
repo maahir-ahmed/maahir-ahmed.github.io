@@ -4,8 +4,7 @@ import { useState, useCallback } from 'react';
 import Navbar from './components/shared/Navbar';
 import UniversityHero from './components/university/UniversityHero';
 import UniversityEducation from './components/university/UniversityEducation';
-import UniversitySocieties from './components/university/UniversitySocieties';
-import UniversityVolunteering from './components/university/UniversityVolunteering';
+import Timeline from './components/shared/Timeline';
 import UniversityCoursework from './components/university/UniversityCoursework';
 import Contact from './components/shared/Contact';
 import Footer from './components/shared/Footer';
@@ -21,7 +20,7 @@ const NAV_LINKS = [
   { href: '#societies',    label: 'Societies'   },
   { href: '#volunteering', label: 'Volunteering' },
   { href: '#contact',      label: 'Contact'     },
-  { href: '/',             label: '← Back'      },
+  { href: '/',             label: 'Main site'   },
 ];
 
 export default function UniversityApp({ content }) {
@@ -52,8 +51,8 @@ export default function UniversityApp({ content }) {
           facts={educationFacts}
         />
         <UniversityCoursework courses={courses} />
-        <UniversitySocieties entries={societies} />
-        <UniversityVolunteering entries={volunteering} />
+        <Timeline id="societies" title="Societies" entries={societies} />
+        <Timeline id="volunteering" title="Volunteering" entries={volunteering} />
         <Contact showNotification={showNotification} />
       </main>
       <Footer />

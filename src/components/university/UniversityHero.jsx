@@ -14,12 +14,9 @@ export default function UniversityHero() {
     <section id="home" className="hero">
       <div className="hero-container">
         <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title fade-in-up">
-              <span className="word-reveal">Hi,</span>{' '}
-              <span className="word-reveal">I&apos;m</span>
-              <br />
-              <span className="name-glow highlight">Maahir Ahmed</span>
+          <div className="hero-text hero-enter">
+            <h1 className="hero-title">
+              Hi, I&apos;m <span className="hero-name">Maahir Ahmed</span>
             </h1>
             <p className="hero-subtitle">CS Student at UNSW</p>
             <p className="hero-description">
@@ -27,8 +24,8 @@ export default function UniversityHero() {
               and PCSoc — managing budgets, running workshops, and building things that matter.
             </p>
             <div className="hero-buttons">
-              <a href="#societies" className="btn btn-primary">My Societies</a>
-              <a href="#contact" className="btn btn-secondary">Get In Touch</a>
+              <a href="#societies" className="btn btn-primary">My societies</a>
+              <a href="#contact" className="btn btn-secondary">Get in touch</a>
             </div>
           </div>
 
@@ -40,11 +37,6 @@ export default function UniversityHero() {
               </div>
               <div className="code-block">
                 <div className="code-header">
-                  <div className="dots">
-                    <span className="dot red" />
-                    <span className="dot yellow" />
-                    <span className="dot green" />
-                  </div>
                   <span className="file-name">student.py</span>
                 </div>
                 <div className="code-content">

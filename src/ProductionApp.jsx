@@ -18,7 +18,7 @@ const NAV_LINKS = [
   { href: '#credits', label: 'My Work' },
   { href: '#skills',  label: 'Skills'  },
   { href: '#contact', label: 'Contact' },
-  { href: '/',        label: '← Back'  },
+  { href: '/',        label: 'Main site' },
 ];
 
 export default function ProductionApp({ productions = [] }) {

@@ -5,7 +5,7 @@ import Footer from '../shared/Footer';
 import { useTheme } from '../../hooks/useTheme';
 
 const NAV_LINKS = [
-  { href: '/production', label: '← Credits' },
+  { href: '/production', label: 'All productions' },
   { href: '/',           label: 'Tech Portfolio' },
 ];
 
@@ -31,15 +31,11 @@ export default function ProductionEventPage({ production }) {
         <div className="container">
 
           <div className="event-header">
-            <a href="/production" className="event-back">← Back to Productions</a>
+            <a href="/production" className="event-back">All productions</a>
             <p className="event-date">{production.date}</p>
             <h1 className="event-title">{production.event}</h1>
             <p className="event-role">{production.role}</p>
-            <div className="event-tags">
-              {production.tech.map(t => (
-                <span key={t} className="tech-tag">{t}</span>
-              ))}
-            </div>
+            <p className="tag-list">{production.tech.join(', ')}</p>
           </div>
 
           <div className="event-body">

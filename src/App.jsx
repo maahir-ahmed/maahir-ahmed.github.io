@@ -6,7 +6,7 @@ import Hero from './components/main/Hero';
 import About from './components/main/About';
 import Projects from './components/main/Projects';
 import Skills from './components/main/Skills';
-import Experience from './components/main/Experience';
+import Timeline from './components/shared/Timeline';
 import Contact from './components/shared/Contact';
 import Footer from './components/shared/Footer';
 import CTFTerminal from './components/ctf/CTFTerminal';
@@ -83,7 +83,7 @@ export default function App({ content }) {
         />
         <Projects projects={projects} />
         <Skills groups={skills} />
-        <Experience entries={experience} />
+        <Timeline id="experience" title="Experience" entries={experience} />
         <Contact showNotification={showNotification} />
       </main>
       <Footer />
