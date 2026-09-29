@@ -1612,6 +1612,9 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
     align-items: center;
 }
 
+.ss-profile { width: fit-content; margin-bottom: 2rem; }
+.ss-profile .profile-photo { width: 140px; height: 140px; }
+
 .ss-title {
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
@@ -1751,6 +1754,7 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
 @media (max-width: 768px) {
     .ss-hero { padding: 110px 0 3.5rem; }
     .ss-hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .ss-profile .profile-photo { width: 112px; height: 112px; }
     .ss-ballot { transform: none; }
     .ss-section { padding: 3.5rem 0; }
     .ss-photos { grid-template-columns: 1fr 1fr; }

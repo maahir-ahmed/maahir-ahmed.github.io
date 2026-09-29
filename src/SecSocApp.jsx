@@ -48,6 +48,10 @@ export default function SecSocApp() {
         <section id="home" className="ss-hero">
           <div className="ss-wrap ss-hero-grid">
             <div>
+              <div className="profile-image ss-profile">
+                <img src="/profile.jpg" alt="Maahir Ahmed" className="profile-photo" />
+                <div className="profile-border" />
+              </div>
               <h1 className="ss-title">Hi! I&apos;m Maahir.</h1>
               <p className="ss-lede">
                 I&apos;m running for Vice President of Internals and Vice President of Technicals.
