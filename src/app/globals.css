@@ -337,7 +337,7 @@ textarea:focus-visible {
 
 .btn-secondary:hover { border-color: var(--text-primary); }
 
-/* ─── Hero visual: square photo in a viewfinder ───────────── */
+/* ─── Hero visual: square photo in a square frame ────────── */
 .hero-text,
 .hero-visual { min-width: 0; }
 
@@ -366,24 +366,12 @@ textarea:focus-visible {
     border-radius: 0;
 }
 
-/* Camera viewfinder corner marks around the square photo */
+/* A plain square outline, offset from the square photo */
 .profile-border {
-    --mark: var(--text-primary);
-    --len: 20px;
-    --w: 2px;
     position: absolute;
-    inset: -12px;
+    inset: -10px;
+    border: 2px solid var(--text-primary);
     pointer-events: none;
-    background:
-        linear-gradient(var(--mark), var(--mark)) top left     / var(--len) var(--w),
-        linear-gradient(var(--mark), var(--mark)) top left     / var(--w) var(--len),
-        linear-gradient(var(--mark), var(--mark)) top right    / var(--len) var(--w),
-        linear-gradient(var(--mark), var(--mark)) top right    / var(--w) var(--len),
-        linear-gradient(var(--mark), var(--mark)) bottom left  / var(--len) var(--w),
-        linear-gradient(var(--mark), var(--mark)) bottom left  / var(--w) var(--len),
-        linear-gradient(var(--mark), var(--mark)) bottom right / var(--len) var(--w),
-        linear-gradient(var(--mark), var(--mark)) bottom right / var(--w) var(--len);
-    background-repeat: no-repeat;
 }
 
 /* ─── Code block ──────────────────────────────────────────── */
