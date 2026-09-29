@@ -17,7 +17,7 @@ function timeline(key, label, section) {
     label,
     model: 'timelineEntry',
     scope: { section },
-    title: (row) => `${row.role} — ${row.org}`,
+    title: (row) => `${row.role}, ${row.org}`,
     fields: timelineFields,
   }
 }
@@ -87,7 +87,7 @@ export const CONTENT_TYPES = [
     key: 'courses',
     label: 'Coursework',
     model: 'course',
-    title: (row) => `${row.code} — ${row.name}`,
+    title: (row) => `${row.code}: ${row.name}`,
     fields: [
       { name: 'code', label: 'Course code', type: 'text', required: true },
       { name: 'name', label: 'Course name', type: 'text', required: true },

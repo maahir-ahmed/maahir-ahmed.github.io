@@ -86,7 +86,7 @@ test('hints advance and run out', () => {
 })
 
 // The two client-side stages live in components, not in this module, so guard
-// against them drifting out of sync — or being written in a way that never
+// against them drifting out of sync, or being written in a way that never
 // reaches the browser at all.
 const readSrc = (rel) => readFileSync(new URL(rel, import.meta.url), 'utf8')
 

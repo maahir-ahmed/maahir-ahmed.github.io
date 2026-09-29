@@ -21,7 +21,7 @@ export default function UniversityHero() {
             <p className="hero-subtitle">CS Student at UNSW</p>
             <p className="hero-description">
               Studying Computer Science at UNSW while serving as Treasurer of both SecSoc
-              and PCSoc — managing budgets, running workshops, and building things that matter.
+              and PCSoc: managing budgets, running workshops, and building things that matter.
             </p>
             <div className="hero-buttons">
               <a href="#societies" className="btn btn-primary">My societies</a>

@@ -78,7 +78,7 @@ export async function GET(request) {
 export async function POST(request) {
   if (!allow(clientKey(request))) {
     return withWhisper(
-      NextResponse.json({ error: 'Slow down — too many attempts.' }, { status: 429 }),
+      NextResponse.json({ error: 'Slow down: too many attempts.' }, { status: 429 }),
     )
   }
 

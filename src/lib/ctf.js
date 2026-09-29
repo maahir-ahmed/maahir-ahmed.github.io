@@ -17,7 +17,7 @@ export const CHALLENGES = [
     id: 'console',
     label: 'Developer Tools',
     flag: 'CTF{C0ns0l3_S4ys_H3ll0}',
-    hint: 'The site greets anyone who opens developer tools. The greeting is not on the page — check the Console tab.',
+    hint: 'The site greets anyone who opens developer tools. The greeting is not on the page: check the Console tab.',
   },
   {
     id: 'base64',
@@ -41,7 +41,7 @@ export const CHALLENGES = [
     id: 'headers',
     label: 'Response Headers',
     flag: 'CTF{H34d3rs_T3ll_T4l3s}',
-    hint: '"cat notes.md". This terminal talks to a real server, and a response is more than its body — run "curl /api/ctf" and read every header it prints.',
+    hint: '"cat notes.md". This terminal talks to a real server, and a response is more than its body. Run "curl /api/ctf" and read every header it prints.',
   },
   {
     id: 'robots',
@@ -53,7 +53,7 @@ export const CHALLENGES = [
     id: 'cookie',
     label: 'Privilege Escalation',
     flag: 'CTF{C00k135_4r3_N0t_4uth}',
-    hint: 'The vault knew you were only a guest — something in your browser told it so. Dev tools, Application, Cookies: promote yourself, then "curl /api/ctf/vault" again.',
+    hint: 'The vault knew you were only a guest: something in your browser told it so. Dev tools, Application, Cookies: promote yourself, then "curl /api/ctf/vault" again.',
   },
 ]
 

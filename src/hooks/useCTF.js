@@ -156,7 +156,7 @@ export function useCTF(showNotification) {
           '  - exit - Close terminal',
           '',
           'Tip: files and scoring are both served by the backend. Two flags are',
-          'not in this terminal at all — your browser dev tools hold those.',
+          'not in this terminal at all; your browser dev tools hold those.',
         );
         break;
 
@@ -253,7 +253,7 @@ export function useCTF(showNotification) {
           const response = await fetch('/api/ctf', { cache: 'no-store' });
           const body = await response.json();
           applyState(body);
-          output.push(body.hint ?? 'No more hints — you have found them all.');
+          output.push(body.hint ?? 'No more hints. You have found them all.');
         } catch {
           output.push('Could not reach the server for a hint.');
         }

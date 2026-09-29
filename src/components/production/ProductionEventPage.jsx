@@ -48,7 +48,7 @@ export default function ProductionEventPage({ production }) {
               <div className="gallery-grid">
                 {production.photos.map((src, i) => (
                   <div key={i} className="gallery-item">
-                    <img src={src} alt={`${production.event} — photo ${i + 1}`} className="gallery-img" />
+                    <img src={src} alt={`${production.event}, photo ${i + 1}`} className="gallery-img" />
                   </div>
                 ))}
               </div>

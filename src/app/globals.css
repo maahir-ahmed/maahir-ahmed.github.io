@@ -13,7 +13,7 @@
     --section-padding: 6rem 0;
     --nav-height: 64px;
 
-    /* Code block — always dark regardless of theme */
+    /* Code block: always dark regardless of theme */
     --code-bg:       #13161a;
     --code-header:   #1b1f24;
     --code-text:     #d5d9de;
