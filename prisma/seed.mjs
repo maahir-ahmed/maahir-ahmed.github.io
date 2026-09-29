@@ -10,6 +10,13 @@ const prisma = new PrismaClient({
 
 const experience = [
   {
+    period: 'Aug 2026 – Present',
+    role: 'Technical Solutions Specialist',
+    org: 'Wave OCE',
+    description: 'Technical Solutions Specialist at Wave OCE, an Oceanic esports organisation.',
+    tags: ['Esports'],
+  },
+  {
     period: 'Sep 2025 – Present',
     role: 'Pick Packer',
     org: 'DB Schenker',
@@ -433,6 +440,11 @@ const productionSkills = [
 
 const productionOrgs = [
   {
+    org: 'Wave OCE',
+    period: 'Aug 2026 – Present',
+    roles: ['Technical Solutions Specialist'],
+  },
+  {
     org: 'UNSW ESports Society',
     period: 'Dec 2025 – Present',
     roles: ['Producer', 'Replay Operator', 'POV Observer', 'Cinematic Observer'],
@@ -451,6 +463,7 @@ const logos = [
   { name: 'TXG', img: '/logos/txg.webp' },
   { name: 'WaveOCE', img: '/logos/waveoce.webp', invert: true },
   { name: 'AUEC', img: null },
+  { name: 'Fortress Grassroots Esports', img: '/logos/fge.webp' },
 ]
 
 const positions = [
@@ -471,7 +484,7 @@ const photos = [
 ]
 
 const roles = [
-  'Main Observer', 'Cinematic Observer', 'POV Observer', 'Replay Operator', 'GFX Operator',
+  'Main Observer', 'Cinematic Observer', 'POV Observer', 'Freecam Operator', 'Replay Operator', 'GFX Operator',
   'Producer', 'Director', 'Technical Director', 'Production Lead', 'Tournament Referee',
 ].map((name) => ({ name }))
 

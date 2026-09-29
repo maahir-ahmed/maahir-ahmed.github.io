@@ -171,9 +171,7 @@ me = Student()`,
         code: `class Producer:
     def __init__(self):
         self.name       = "Maahir Ahmed"
-        self.roles      = ["Production Lead", "Technical Director"]
-        self.tools      = ["vMix", "NDI", "OBS", "FFMPEG"]
-        self.speciality = ["Live Broadcast", "Multi-Camera"]
+        self.speciality = "Esports"
 
 me = Producer()`,
       }),

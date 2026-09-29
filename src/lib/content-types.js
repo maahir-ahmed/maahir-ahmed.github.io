@@ -89,7 +89,7 @@ export const CONTENT_TYPES = [
     fields: [
       { name: 'name', label: 'Name', type: 'text', required: true, hint: 'Alt text, or shown as text when there is no image' },
       { name: 'img', label: 'Image path', type: 'url', hint: 'e.g. /logos/txg.webp. Leave empty to show the name.' },
-      { name: 'invert', label: 'Invert in dark mode', type: 'checkbox', hint: 'For dark logos on a transparent background' },
+      { name: 'invert', label: 'Invert in light mode', type: 'checkbox', hint: 'For white logos on a transparent background' },
     ],
   },
   {
