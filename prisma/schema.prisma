@@ -69,6 +69,16 @@ model SkillGroup {
   @@index([section, position])
 }
 
+// Role tick boxes for productions and organisations. Roles typed into "Other
+// roles" are added here automatically.
+model Role {
+  id       String @id @default(cuid())
+  name     String @unique
+  position Int    @default(0)
+
+  @@index([position])
+}
+
 // "Current organisations" on /production
 model ProductionOrg {
   id       String   @id @default(cuid())

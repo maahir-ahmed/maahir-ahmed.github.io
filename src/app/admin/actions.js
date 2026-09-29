@@ -3,7 +3,7 @@
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { clearFailures, recordFailure, throttle, verifyPassword } from '../../lib/auth'
-import { coerce, getContentType, validate } from '../../lib/content-types'
+import { coerce, getContentType, present, validate } from '../../lib/content-types'
 import { prisma } from '../../lib/db'
 import { adminPathOf, getPage, getSection, orderKey, sectionOrder, settingKey } from '../../lib/pages'
 import { endSession, requireAdmin, startSession } from '../../lib/session'
@@ -46,11 +46,16 @@ export async function save(typeKey, id, _prev, formData) {
 
   const data = {}
   for (const field of type.fields) {
-    data[field.name] = coerce(field, formData.get(field.name))
+    const raw = field.type === 'roles' ? formData.getAll(field.name) : formData.get(field.name)
+    data[field.name] = coerce(field, raw)
   }
 
   const errors = validate(type, data)
   if (errors.length) return { error: errors.join('. ') }
+
+  for (const field of type.fields) {
+    if (field.type === 'roles') await addRoleChoices(present(field, data[field.name]))
+  }
 
   try {
     if (id === 'new') {
@@ -62,11 +67,22 @@ export async function save(typeKey, id, _prev, formData) {
       await prisma[type.model].update({ where: { id }, data })
     }
   } catch (error) {
-    if (error?.code === 'P2002') return { error: 'That slug is already used.' }
+    if (error?.code === 'P2002') return { error: 'That slug or name is already used.' }
     throw error
   }
 
   redirect(adminPathOf(typeKey))
+}
+
+// Any role typed into "Other roles" becomes a tick box from then on
+async function addRoleChoices(names) {
+  if (names.length === 0) return
+  const { _max } = await prisma.role.aggregate({ _max: { position: true } })
+  const start = (_max.position ?? -1) + 1
+  await prisma.role.createMany({
+    data: names.map((name, i) => ({ name, position: start + i })),
+    skipDuplicates: true,
+  })
 }
 
 export async function remove(typeKey, id) {

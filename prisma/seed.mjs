@@ -115,6 +115,149 @@ const volunteering = [
 
 const productions = [
   {
+    slug: 'fortress-grassroots-sydney-lan-2',
+    event: 'Fortress Grassroots Esports 2026: Sydney LAN 2',
+    date: '12 – 13 Sep 2026',
+    year: 2026,
+    role: 'Cinematic Observer / Director',
+    description:
+      'Cinematic observer and director for the live broadcast of Fortress Grassroots Esports 2026: Sydney LAN 2, a VALORANT LAN run by Fortress Grassroots Esports at Fortress Sydney.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports', 'LAN'],
+    photos: [],
+  },
+  {
+    slug: 'road-2-new-dawn',
+    event: 'Road 2 New Dawn',
+    date: '7 – 19 Sep 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of Road 2 New Dawn, an online VALORANT tournament run by Road 2 Tourneys.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports'],
+    photos: [],
+  },
+  {
+    slug: 'ezmode-turbo-tuesday-3',
+    event: 'Ezmode Turbo Tuesday 3',
+    date: '1 Sep 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of Ezmode Turbo Tuesday 3, an online VALORANT tournament run by Ezmode.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports'],
+    photos: [],
+  },
+  {
+    slug: 'ezmode-turbo-tuesday-2',
+    event: 'Ezmode Turbo Tuesday 2',
+    date: '25 Aug 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of Ezmode Turbo Tuesday 2, an online VALORANT tournament run by Ezmode.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports'],
+    photos: [],
+  },
+  {
+    slug: 'ezmode-turbo-tuesday-1',
+    event: 'Ezmode Turbo Tuesday 1',
+    date: '18 Aug 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of Ezmode Turbo Tuesday 1, an online VALORANT tournament run by Ezmode.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports'],
+    photos: [],
+  },
+  {
+    slug: 'txg-valorant-circuit-invitational',
+    event: 'TXG Valorant Circuit: Invitational',
+    date: '24 Jul – 2 Aug 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of TXG Valorant Circuit: Invitational, an online VALORANT tournament run by TXG.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports'],
+    photos: [],
+  },
+  {
+    slug: 'road-2-invitational',
+    event: 'Road 2 Invitational',
+    date: '23 Jul – 1 Aug 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of Road 2 Invitational, an online VALORANT tournament run by Road 2 Tourneys.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports'],
+    photos: [],
+  },
+  {
+    slug: 'waveoce-smash-con-sunday',
+    event: 'WaveOCE Smash! Con 2026: Sunday',
+    date: '12 Jul 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of WaveOCE Smash! Con 2026: Sunday, a VALORANT LAN run by WaveOCE at ICC Sydney.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports', 'LAN'],
+    photos: [],
+  },
+  {
+    slug: 'waveoce-smash-con-saturday',
+    event: 'WaveOCE Smash! Con 2026: Saturday',
+    date: '11 Jul 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of WaveOCE Smash! Con 2026: Saturday, a VALORANT LAN run by WaveOCE at ICC Sydney.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports', 'LAN'],
+    photos: [],
+  },
+  {
+    slug: 'fortress-grassroots-sydney-qualifier',
+    event: 'Fortress Grassroots Esports 2026: Sydney Qualifier',
+    date: '6 – 7 Jun 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of Fortress Grassroots Esports 2026: Sydney Qualifier, a VALORANT LAN run by Fortress Games at Fortress Sydney.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports', 'LAN'],
+    photos: [],
+  },
+  {
+    slug: 'fortress-grassroots-melbourne-qualifier',
+    event: 'Fortress Grassroots Esports 2026: Melbourne Qualifier',
+    date: '6 – 7 Jun 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of Fortress Grassroots Esports 2026: Melbourne Qualifier, a VALORANT LAN run by Fortress Games at Fortress Melbourne.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports', 'LAN'],
+    photos: [],
+  },
+  {
+    slug: 'waveoce-rising-tides-split-2',
+    event: 'WaveOCE Rising Tides: Split 2',
+    date: '12 – 31 May 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of WaveOCE Rising Tides: Split 2, an online VALORANT tournament run by WaveOCE.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports'],
+    photos: [],
+  },
+  {
+    slug: 'fortress-grassroots-open-qualifier',
+    event: 'Fortress Grassroots Esports 2026: Open Qualifier',
+    date: '23 – 24 May 2026',
+    year: 2026,
+    role: 'Main Observer',
+    description:
+      'Main observer for the live broadcast of Fortress Grassroots Esports 2026: Open Qualifier, an online VALORANT tournament run by Fortress Games.',
+    tech: ['VALORANT', 'Live Broadcast', 'Esports'],
+    photos: [],
+  },
+  {
     slug: 'auec-unsw-showmatch',
     event: 'AUEC x UNSW Showmatch',
     date: '25 Apr 2026',
@@ -327,6 +470,11 @@ const photos = [
   { src: '/images/SecSoc2025.jpg', caption: 'SecSoc, 2025' },
 ]
 
+const roles = [
+  'Main Observer', 'Cinematic Observer', 'POV Observer', 'Replay Operator', 'GFX Operator',
+  'Producer', 'Director', 'Technical Director', 'Production Lead', 'Tournament Referee',
+].map((name) => ({ name }))
+
 // Section text needs no seeding: src/lib/pages.js holds the defaults.
 
 function positioned(rows, extra = {}) {
@@ -357,6 +505,7 @@ async function main() {
   await fill('logo', positioned(logos), 'logos')
   await fill('project', positioned(projects), 'projects')
   await fill('course', positioned(courses), 'courses')
+  await fill('role', positioned(roles), 'role choices')
   await fill('position', positioned(positions), 'secsoc positions')
   await fill('photo', positioned(photos), 'secsoc photos')
 }

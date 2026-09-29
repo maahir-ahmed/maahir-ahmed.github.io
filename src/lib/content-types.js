@@ -64,7 +64,7 @@ export const CONTENT_TYPES = [
       { name: 'event', label: 'Event', type: 'text', required: true },
       { name: 'date', label: 'Date', type: 'text', required: true, hint: 'Free text, e.g. 25 Apr 2026' },
       { name: 'year', label: 'Year', type: 'number', required: true, hint: 'Groups the list; order within a year follows the tiles' },
-      { name: 'role', label: 'Role', type: 'text', required: true },
+      { name: 'role', label: 'Roles', type: 'roles', join: ' / ', required: true },
       { name: 'description', label: 'Description', type: 'textarea', required: true },
       { name: 'tech', label: 'Tech / tags', type: 'list', hint: 'One per line' },
       { name: 'photos', label: 'Photos', type: 'list', hint: 'One path per line, e.g. /productions/slug/a.jpg' },
@@ -78,7 +78,7 @@ export const CONTENT_TYPES = [
     fields: [
       { name: 'org', label: 'Organisation', type: 'text', required: true },
       { name: 'period', label: 'Period', type: 'text', required: true, hint: '"Present" adds the red current mark' },
-      { name: 'roles', label: 'Roles', type: 'list', required: true, hint: 'One per line' },
+      { name: 'roles', label: 'Roles', type: 'roles', required: true },
     ],
   },
   {
@@ -91,6 +91,13 @@ export const CONTENT_TYPES = [
       { name: 'img', label: 'Image path', type: 'url', hint: 'e.g. /logos/txg.webp. Leave empty to show the name.' },
       { name: 'invert', label: 'Invert in dark mode', type: 'checkbox', hint: 'For dark logos on a transparent background' },
     ],
+  },
+  {
+    key: 'production-roles',
+    label: 'Role choices',
+    model: 'role',
+    title: (row) => row.name,
+    fields: [{ name: 'name', label: 'Role', type: 'text', required: true, hint: 'Shows as a tick box on productions and organisations' }],
   },
   skills('production-skills', 'PRODUCTION'),
   {
@@ -148,8 +155,13 @@ export function getContentType(key) {
   return CONTENT_TYPES.find((type) => type.key === key) ?? null
 }
 
-// form value -> prisma value, per field type
+// form value -> prisma value, per field type. A roles field arrives as every
+// ticked box plus the "Other roles" lines, all under the one name.
 export function coerce(field, raw) {
+  if (field.type === 'roles') {
+    const roles = [...new Set([raw].flat().flatMap((value) => String(value ?? '').split('\n')).map((r) => r.trim()).filter(Boolean))]
+    return field.join ? roles.join(field.join) : roles
+  }
   if (field.type === 'list') {
     return String(raw ?? '')
       .split('\n')
@@ -168,6 +180,9 @@ export function coerce(field, raw) {
 
 // prisma value -> textarea/input value
 export function present(field, value) {
+  if (field.type === 'roles') {
+    return (Array.isArray(value) ? value : String(value ?? '').split(field.join)).map((r) => r.trim()).filter(Boolean)
+  }
   if (field.type === 'list') return (value ?? []).join('\n')
   if (field.type === 'checkbox') return Boolean(value)
   return value ?? ''
@@ -178,7 +193,7 @@ export function validate(type, data) {
   for (const field of type.fields) {
     if (!field.required) continue
     const value = data[field.name]
-    const empty = field.type === 'list' ? value.length === 0 : value === '' || value === null
+    const empty = Array.isArray(value) ? value.length === 0 : value === '' || value === null
     if (empty) errors.push(`${field.label} is required`)
   }
   return errors

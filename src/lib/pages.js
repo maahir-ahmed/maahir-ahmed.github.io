@@ -180,7 +180,7 @@ me = Producer()`,
       {
         key: 'credits',
         label: 'My work',
-        lists: ['production-orgs', 'productions'],
+        lists: ['production-orgs', 'productions', 'production-roles'],
         fields: [
           title('My work'),
           { key: 'orgsTitle', label: 'Organisations heading', type: 'text', default: 'Current organisations' },

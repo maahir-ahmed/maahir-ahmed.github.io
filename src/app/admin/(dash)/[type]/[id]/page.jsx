@@ -21,6 +21,12 @@ export default async function EditPage({ params }) {
     if (!row) notFound()
   }
 
+  // Role tick boxes come from the Role table, so new roles need no code change
+  const roleChoices = type.fields.some((field) => field.type === 'roles')
+    ? (await prisma.role.findMany({ orderBy: { position: 'asc' } })).map((role) => role.name)
+    : []
+  const fields = type.fields.map((field) => (field.type === 'roles' ? { ...field, options: roleChoices } : field))
+
   const values = Object.fromEntries(
     type.fields.map((field) => [field.name, present(field, row?.[field.name])]),
   )
@@ -35,7 +41,7 @@ export default async function EditPage({ params }) {
       <EditForm
         typeKey={type.key}
         id={id}
-        fields={type.fields}
+        fields={fields}
         values={values}
       />
 

@@ -332,6 +332,18 @@ button:disabled {
 
 .admin-check input { width: auto; }
 
+.admin-roles { border: 0; padding: 0; margin: 0; }
+.admin-roles legend { font-size: 0.85rem; color: var(--admin-muted); margin-bottom: 0.35rem; }
+
+.admin-role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-role-grid .admin-check { min-height: 32px; font-size: 0.9rem; }
+
 @media (max-width: 640px) {
   .admin-shell {
     flex-direction: column;

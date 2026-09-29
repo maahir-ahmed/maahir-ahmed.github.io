@@ -16,6 +16,29 @@ function Field({ field, defaultValue }) {
     )
   }
 
+  if (field.type === 'roles') {
+    const other = defaultValue.filter((role) => !field.options.includes(role))
+    return (
+      <fieldset className="admin-field admin-roles">
+        <legend>
+          {field.label}
+          {field.required && <span className="admin-required"> *</span>}
+        </legend>
+        <div className="admin-role-grid">
+          {field.options.map((role) => (
+            <label key={role} className="admin-check">
+              <input type="checkbox" name={field.name} value={role} defaultChecked={defaultValue.includes(role)} />
+              {role}
+            </label>
+          ))}
+        </div>
+        <label htmlFor={`${field.name}-other`}>Other roles</label>
+        <textarea id={`${field.name}-other`} name={field.name} rows={2} defaultValue={other.join('\n')} />
+        <p className="admin-hint">One per line. Shown after the ticked roles, joined with " / ".</p>
+      </fieldset>
+    )
+  }
+
   const common = {
     id: field.name,
     name: field.name,
