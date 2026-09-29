@@ -9,14 +9,9 @@ export default function Projects({ projects = [] }) {
               <h3 className="project-title">{project.title}</h3>
               <p className="project-description">{project.description}</p>
               <p className="tag-list">{project.tech.join(', ')}</p>
-              {(project.github || project.demo) && (
+              {project.demo && (
                 <p className="project-links">
-                  {project.github && (
-                    <a href={project.github} target="_blank" rel="noreferrer">GitHub</a>
-                  )}
-                  {project.demo && (
-                    <a href={project.demo} target="_blank" rel="noreferrer">Live site</a>
-                  )}
+                  <a href={project.demo} target="_blank" rel="noreferrer">Live site</a>
                 </p>
               )}
             </article>

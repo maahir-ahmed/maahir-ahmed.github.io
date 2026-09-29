@@ -71,14 +71,6 @@ export default function Contact({ showNotification }) {
                   </a>
                 </dd>
               </div>
-              <div>
-                <dt>GitHub</dt>
-                <dd>
-                  <a href="https://github.com/maahir-ahmed" target="_blank" rel="noreferrer">
-                    github.com/maahir-ahmed
-                  </a>
-                </dd>
-              </div>
             </dl>
           </div>
 

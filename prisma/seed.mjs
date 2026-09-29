@@ -248,7 +248,7 @@ const projects = [
     description:
       'This site. Built with Next.js and React; dark/light theme, smooth transitions, a hidden CTF challenge, and a Konami code easter egg. You found this one.',
     tech: ['Next.js', 'React', 'CSS'],
-    github: 'https://github.com/maahir-ahmed',
+    github: null,
     demo: 'https://maahirahmed.com',
   },
 ]

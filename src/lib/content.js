@@ -25,7 +25,8 @@ export function lines(value) {
 
 export async function getHomeContent() {
   const [projects, skills, experience, aboutFacts, map] = await Promise.all([
-    prisma.project.findMany({ orderBy: byPosition }),
+    // GitHub links are hidden for now, so they never leave the server
+    prisma.project.findMany({ orderBy: byPosition, omit: { github: true } }),
     prisma.skillGroup.findMany({ orderBy: byPosition }),
     timeline('EXPERIENCE'),
     facts('ABOUT'),
