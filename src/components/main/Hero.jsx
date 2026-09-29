@@ -1,3 +1,5 @@
+import CodeBlock from '../shared/CodeBlock';
+
 const CODE_HTML = `<span class="keyword">class</span> <span class="class-name">Developer</span>:
     <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>):
         <span class="keyword">self</span>.name     = <span class="string">"Maahir Ahmed"</span>
@@ -33,16 +35,7 @@ export default function Hero({ subtitle = '', description = '' }) {
                 <img src="/profile.jpg" alt="Maahir Ahmed" className="profile-photo" />
                 <div className="profile-border" />
               </div>
-              <div className="code-block">
-                <div className="code-header">
-                  <span className="file-name">about_me.py</span>
-                </div>
-                <div className="code-content">
-                  <pre>
-                    <code dangerouslySetInnerHTML={{ __html: CODE_HTML }} />
-                  </pre>
-                </div>
-              </div>
+              <CodeBlock file="about_me.py" html={CODE_HTML} />
             </div>
           </div>
         </div>

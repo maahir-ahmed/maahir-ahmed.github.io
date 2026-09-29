@@ -244,7 +244,7 @@ textarea:focus-visible {
 
 .hero-content {
     display: grid;
-    grid-template-columns: 1.05fr 1fr;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     gap: 4.5rem;
     align-items: center;
 }
@@ -319,6 +319,9 @@ textarea:focus-visible {
 .btn-secondary:hover { border-color: var(--text-primary); }
 
 /* ─── Hero visual: square photo in a viewfinder ───────────── */
+.hero-text,
+.hero-visual { min-width: 0; }
+
 .hero-visual { display: flex; justify-content: flex-end; }
 
 .profile-section {
@@ -327,6 +330,7 @@ textarea:focus-visible {
     align-items: flex-start;
     gap: 2.25rem;
     width: 100%;
+    min-width: 0;
     max-width: 460px;
 }
 
@@ -391,10 +395,19 @@ textarea:focus-visible {
     font-size: 0.82rem;
     line-height: 1.7;
     color: var(--code-text);
-    overflow-x: auto;
+    margin: 0;
 }
 
-.code-content pre { margin: 0; }
+.code-content code { display: block; }
+
+/* One block per source line; wrapped continuations hang 4ch deeper */
+.code-line {
+    display: block;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding-left: calc((var(--indent, 0) + 4) * 1ch);
+    text-indent: -4ch;
+}
 
 .keyword     { color: var(--code-keyword); }
 .string      { color: var(--code-string); }
@@ -1036,7 +1049,7 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* ─── Responsive ──────────────────────────────────────────── */
 @media (max-width: 900px) {
-    .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-content { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
     .hero-visual { justify-content: flex-start; }
 
     main > section:not(.hero) > .container { grid-template-columns: 1fr; gap: 1.75rem; }
