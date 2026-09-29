@@ -1275,6 +1275,18 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
 
 .ss-photos figcaption { font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem; }
 
+/* The whole society at BSides: the centrepiece of "Why SecSoc" */
+.ss-feature { margin: 2.5rem 0 2rem; }
+
+.ss-feature img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.ss-feature figcaption { font-size: 0.9rem; color: var(--text-light); margin-top: 0.65rem; }
+
 .ss-position {
     display: grid;
     grid-template-columns: 4.5rem 1fr;
@@ -1298,6 +1310,10 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
     .ss-section { padding: 3.5rem 0; }
     .ss-photos { grid-template-columns: 1fr 1fr; }
     .ss-photos figure:last-child { display: none; }
+    /* Edge to edge on phones so the faces stay big enough to recognise */
+    .ss-feature { margin-inline: -1.5rem; }
+    .ss-feature img { border-radius: 0; }
+    .ss-feature figcaption { padding-inline: 1.5rem; }
     .ss-position { grid-template-columns: 1fr; gap: 1rem; }
     .ss-box-lg { width: 3.25rem; height: 3.25rem; font-size: 1.7rem; }
     .ss-prose .ss-vision { font-size: 1.15rem; }

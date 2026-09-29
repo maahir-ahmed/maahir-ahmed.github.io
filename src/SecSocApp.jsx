@@ -120,19 +120,35 @@ export default function SecSocApp() {
         </section>
 
         <section id="why" className="ss-section">
-          <div className="ss-wrap ss-prose">
-            <h2>Why SecSoc</h2>
-            <p>
-              SecSoc has always been home to me since my first year. The people I have met here have
-              helped me with my academics, career goals and personal life. I couldn&apos;t thank them
-              all enough for it, and I want to be able to share this with everyone else I meet.
-            </p>
-            <p className="ss-vision">
-              My vision for the next year is to help support a committee with my help and direction
-              to run smoothly throughout the year, enough that everyone gets to spend their energy on
-              the fun parts: enjoying great events, building cool things, gaining new opportunities
-              and bringing more people into our amazing community.
-            </p>
+          <div className="ss-wrap">
+            <div className="ss-prose">
+              <h2>Why SecSoc</h2>
+              <p>
+                SecSoc has always been home to me since my first year. The people I have met here have
+                helped me with my academics, career goals and personal life. I couldn&apos;t thank them
+                all enough for it, and I want to be able to share this with everyone else I meet.
+              </p>
+            </div>
+            <figure className="ss-feature">
+              <img
+                src="/images/SecSocBSides-1600.webp"
+                srcSet="/images/SecSocBSides-800.webp 800w, /images/SecSocBSides-1600.webp 1600w"
+                sizes="(max-width: 1040px) 100vw, 1000px"
+                width="1600"
+                height="1014"
+                loading="lazy"
+                alt="About fifty SecSoc members on the steps at BSides Canberra, holding the Security Society banner"
+              />
+              <figcaption>SecSoc at BSides Canberra</figcaption>
+            </figure>
+            <div className="ss-prose">
+              <p className="ss-vision">
+                My vision for the next year is to help support a committee with my help and direction
+                to run smoothly throughout the year, enough that everyone gets to spend their energy on
+                the fun parts: enjoying great events, building cool things, gaining new opportunities
+                and bringing more people into our amazing community.
+              </p>
+            </div>
           </div>
         </section>
 
