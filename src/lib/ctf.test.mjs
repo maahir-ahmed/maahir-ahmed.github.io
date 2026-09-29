@@ -92,7 +92,7 @@ const readSrc = (rel) => readFileSync(new URL(rel, import.meta.url), 'utf8')
 
 test('client-side flags are shipped by the components that own them', () => {
   const flagOf = (id) => CHALLENGES.find(c => c.id === id).flag
-  assert.match(readSrc('../components/main/Hero.jsx'), new RegExp(escapeRe(flagOf('source'))))
+  assert.match(readSrc('../App.jsx'), new RegExp(`flag="${escapeRe(flagOf('source'))}"`))
   assert.match(readSrc('../App.jsx'), new RegExp(`console\\.log\\([^)]*${escapeRe(flagOf('console'))}`))
 })
 

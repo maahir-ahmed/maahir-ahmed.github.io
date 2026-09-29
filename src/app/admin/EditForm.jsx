@@ -4,6 +4,18 @@ import { useActionState } from 'react'
 import { save } from './actions'
 
 function Field({ field, defaultValue }) {
+  if (field.type === 'checkbox') {
+    return (
+      <div className="admin-field">
+        <label className="admin-check">
+          <input type="checkbox" name={field.name} defaultChecked={defaultValue} />
+          {field.label}
+        </label>
+        {field.hint && <p className="admin-hint">{field.hint}</p>}
+      </div>
+    )
+  }
+
   const common = {
     id: field.name,
     name: field.name,

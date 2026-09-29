@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CONTENT_TYPES } from '../../../lib/content-types'
+import { PAGES } from '../../../lib/pages'
 import { requireAdmin } from '../../../lib/session'
 import { logout } from '../actions'
 import '../admin.css'
@@ -14,8 +14,8 @@ export default async function AdminLayout({ children }) {
       <aside className="admin-nav">
         <Link href="/admin" className="admin-brand">Admin</Link>
         <nav>
-          {CONTENT_TYPES.map((type) => (
-            <Link key={type.key} href={`/admin/${type.key}`}>{type.label}</Link>
+          {PAGES.map((page) => (
+            <Link key={page.key} href={`/admin/pages/${page.key}`}>{page.label}</Link>
           ))}
         </nav>
         <div className="admin-nav-footer">

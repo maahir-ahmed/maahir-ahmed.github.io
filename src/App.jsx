@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react';
+import { Fragment, useState, useCallback, useEffect, useMemo } from 'react';
 import Navbar from './components/shared/Navbar';
-import Hero from './components/main/Hero';
+import Hero from './components/shared/Hero';
 import About from './components/main/About';
 import Projects from './components/main/Projects';
 import Skills from './components/main/Skills';
@@ -16,7 +16,6 @@ import { useTheme } from './hooks/useTheme';
 import { useScrollSpy } from './hooks/useScrollSpy';
 import { useCTF } from './hooks/useCTF';
 
-const SECTIONS  = ['home', 'about', 'projects', 'skills', 'experience', 'contact'];
 const NAV_LINKS = [
   { href: '#home',        label: 'Home'       },
   { href: '/university',  label: 'University'        },
@@ -24,9 +23,10 @@ const NAV_LINKS = [
 ];
 
 export default function App({ content }) {
-  const { projects, skills, experience, aboutFacts, settings } = content;
+  const { order, text, lists } = content;
   const { theme, toggleTheme } = useTheme();
-  const activeSection = useScrollSpy(SECTIONS);
+  const sectionIds = useMemo(() => ['home', ...order], [order]);
+  const activeSection = useScrollSpy(sectionIds);
   const [notification, setNotification] = useState(null);
 
   const showNotification = useCallback((message, type = 'info') => {
@@ -64,6 +64,14 @@ export default function App({ content }) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [showNotification]);
 
+  const sections = {
+    about:      () => <About text={text.about} facts={lists['about-facts']} />,
+    projects:   () => <Projects title={text.projects.title} projects={lists.projects} />,
+    skills:     () => <Skills title={text.skills.title} groups={lists.skills} />,
+    experience: () => <Timeline id="experience" title={text.experience.title} entries={lists.experience} />,
+    contact:    () => <Contact text={text.contact} showNotification={showNotification} />,
+  };
+
   return (
     <>
       <Navbar
@@ -74,17 +82,8 @@ export default function App({ content }) {
         navLinks={NAV_LINKS}
       />
       <main>
-        <Hero subtitle={settings.heroSubtitle} description={settings.heroDescription} />
-        <About
-          intro={settings.aboutIntro}
-          outro={settings.aboutOutro}
-          bullets={settings.aboutBullets}
-          facts={aboutFacts}
-        />
-        <Projects projects={projects} />
-        <Skills groups={skills} />
-        <Timeline id="experience" title="Experience" entries={experience} />
-        <Contact showNotification={showNotification} />
+        <Hero text={text.hero} primaryHref="#projects" flag="CTF{H1dd3n_1n_C0d3_B10ck}" cat />
+        {order.map(key => <Fragment key={key}>{sections[key]()}</Fragment>)}
       </main>
       <Footer />
 

@@ -4,8 +4,8 @@ export default function Timeline({ id, title, entries = [] }) {
       <div className="container">
         <h2 className="section-title">{title}</h2>
         <ol className="timeline">
-          {entries.map((entry, i) => (
-            <li key={i} className="timeline-item">
+          {entries.map(entry => (
+            <li key={entry.id} className="timeline-item">
               <p className="timeline-period">
                 {entry.period.includes('Present') && <span className="tally" aria-label="Current" />}
                 {entry.period}

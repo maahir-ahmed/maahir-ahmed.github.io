@@ -54,11 +54,59 @@ model Project {
   @@index([position])
 }
 
+enum SkillSection {
+  HOME
+  PRODUCTION
+}
+
 model SkillGroup {
-  id       String   @id @default(cuid())
+  id       String       @id @default(cuid())
+  section  SkillSection @default(HOME)
   category String
   skills   String[]
+  position Int          @default(0)
+
+  @@index([section, position])
+}
+
+// "Current organisations" on /production
+model ProductionOrg {
+  id       String   @id @default(cuid())
+  org      String
+  period   String
+  roles    String[]
   position Int      @default(0)
+
+  @@index([position])
+}
+
+// The scrolling logo strip on /production. No image shows the name as text.
+model Logo {
+  id       String  @id @default(cuid())
+  name     String
+  img      String?
+  invert   Boolean @default(false)
+  position Int     @default(0)
+
+  @@index([position])
+}
+
+// /secsoc ballot preferences, in preference order
+model Position {
+  id       String @id @default(cuid())
+  title    String
+  body     String
+  position Int    @default(0)
+
+  @@index([position])
+}
+
+// /secsoc background photos
+model Photo {
+  id       String @id @default(cuid())
+  src      String
+  caption  String
+  position Int    @default(0)
 
   @@index([position])
 }
@@ -88,7 +136,7 @@ model Fact {
   @@index([section, position])
 }
 
-// Free prose that isn't a repeating list (hero headline, about paragraphs).
+// Section text and page section order, keyed as described in src/lib/pages.js.
 model Setting {
   key   String @id
   value String

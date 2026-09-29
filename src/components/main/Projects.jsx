@@ -1,8 +1,8 @@
-export default function Projects({ projects = [] }) {
+export default function Projects({ title, projects = [] }) {
   return (
     <section id="projects">
       <div className="container">
-        <h2 className="section-title">Projects</h2>
+        <h2 className="section-title">{title}</h2>
         <div className="project-list">
           {projects.map(project => (
             <article key={project.id} className="project">

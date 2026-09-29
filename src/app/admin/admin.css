@@ -247,6 +247,91 @@ button:disabled {
   color: #fff;
 }
 
+/* ─── Draggable tiles ─────────────────────────────────────── */
+.admin-tiles {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.admin-tile-row {
+  display: flex;
+  align-items: stretch;
+  background: var(--admin-panel);
+  border: 1px solid var(--admin-line);
+  border-radius: 8px;
+}
+
+.admin-tile-row:hover { border-color: var(--admin-accent); }
+
+.admin-tile-row.is-dragging {
+  border-color: var(--admin-accent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  position: relative;
+  z-index: 1;
+}
+
+.admin-tile-row.is-pinned { opacity: 0.75; }
+
+.drag-handle {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  flex-shrink: 0;
+  padding: 0;
+  background: none;
+  border-radius: 8px 0 0 8px;
+  color: var(--admin-muted);
+  cursor: grab;
+  touch-action: none; /* a finger drags the tile instead of scrolling */
+}
+
+.drag-handle svg { width: 10px; height: 16px; fill: currentColor; }
+.drag-handle:hover, .drag-handle:focus-visible { color: var(--admin-text); background: var(--admin-line); }
+.is-dragging .drag-handle { cursor: grabbing; }
+
+.admin-tile-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem 0.65rem 0.25rem;
+  color: var(--admin-text);
+  text-decoration: none;
+}
+
+.admin-lead { margin: -0.75rem 0 1.25rem; }
+.admin-hint:empty, .admin-hint[aria-live] { min-height: 1.2em; }
+
+.admin-list-block { margin-top: 2rem; }
+.admin-list-block .admin-header { margin-bottom: 0.75rem; }
+.admin-list-block h2 { font-size: 1.05rem; font-weight: 600; }
+
+.admin-actions { display: flex; align-items: center; gap: 1rem; }
+.admin-saved { color: #5ad19a; font-size: 0.88rem; }
+
+.admin-code {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.85rem;
+  white-space: pre;
+  overflow-x: auto;
+  tab-size: 4;
+}
+
+.admin-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--admin-text);
+}
+
+.admin-check input { width: auto; }
+
 @media (max-width: 640px) {
   .admin-shell {
     flex-direction: column;

@@ -1,14 +1,14 @@
-// The single source of truth for the admin panel. Every list page, edit form,
-// validation rule and seed record is derived from this registry, so adding a
-// new editable content type means adding one entry here and nothing else.
+// Every repeating list on the site. The admin item forms, validation and
+// ordering are derived from this registry; src/lib/pages.js says which section
+// each list belongs to. Order comes from dragging tiles in /admin, which writes
+// `position`, so it is never a form field.
 
 const timelineFields = [
-  { name: 'period', label: 'Period', type: 'text', required: true, hint: 'e.g. Sep 2025 – Present' },
+  { name: 'period', label: 'Period', type: 'text', required: true, hint: 'e.g. Sep 2025 – Present. "Present" adds the red current mark.' },
   { name: 'role', label: 'Role', type: 'text', required: true },
   { name: 'org', label: 'Organisation', type: 'text', required: true },
   { name: 'description', label: 'Description', type: 'textarea', required: true },
   { name: 'tags', label: 'Tags', type: 'list', hint: 'One per line' },
-  { name: 'position', label: 'Sort position', type: 'number' },
 ]
 
 function timeline(key, label, section) {
@@ -28,11 +28,24 @@ function facts(key, label, section) {
     label,
     model: 'fact',
     scope: { section },
-    title: (row) => row.label,
+    title: (row) => `${row.label}: ${row.value}`,
     fields: [
       { name: 'label', label: 'Label', type: 'text', required: true },
       { name: 'value', label: 'Value', type: 'text', required: true },
-      { name: 'position', label: 'Sort position', type: 'number' },
+    ],
+  }
+}
+
+function skills(key, section) {
+  return {
+    key,
+    label: 'Skill groups',
+    model: 'skillGroup',
+    scope: { section },
+    title: (row) => row.category,
+    fields: [
+      { name: 'category', label: 'Category', type: 'text', required: true },
+      { name: 'skills', label: 'Skills', type: 'list', required: true, hint: 'One per line' },
     ],
   }
 }
@@ -45,44 +58,57 @@ export const CONTENT_TYPES = [
     key: 'productions',
     label: 'Productions',
     model: 'production',
-    title: (row) => row.event,
+    title: (row) => `${row.year}: ${row.event}`,
     fields: [
       { name: 'slug', label: 'Slug', type: 'text', required: true, hint: 'URL path, e.g. road-2-opens-4' },
       { name: 'event', label: 'Event', type: 'text', required: true },
       { name: 'date', label: 'Date', type: 'text', required: true, hint: 'Free text, e.g. 25 Apr 2026' },
-      { name: 'year', label: 'Year', type: 'number', required: true },
+      { name: 'year', label: 'Year', type: 'number', required: true, hint: 'Groups the list; order within a year follows the tiles' },
       { name: 'role', label: 'Role', type: 'text', required: true },
       { name: 'description', label: 'Description', type: 'textarea', required: true },
       { name: 'tech', label: 'Tech / tags', type: 'list', hint: 'One per line' },
       { name: 'photos', label: 'Photos', type: 'list', hint: 'One path per line, e.g. /productions/slug/a.jpg' },
-      { name: 'position', label: 'Sort position', type: 'number' },
     ],
   },
+  {
+    key: 'production-orgs',
+    label: 'Current organisations',
+    model: 'productionOrg',
+    title: (row) => row.org,
+    fields: [
+      { name: 'org', label: 'Organisation', type: 'text', required: true },
+      { name: 'period', label: 'Period', type: 'text', required: true, hint: '"Present" adds the red current mark' },
+      { name: 'roles', label: 'Roles', type: 'list', required: true, hint: 'One per line' },
+    ],
+  },
+  {
+    key: 'logos',
+    label: 'Logos',
+    model: 'logo',
+    title: (row) => row.name,
+    fields: [
+      { name: 'name', label: 'Name', type: 'text', required: true, hint: 'Alt text, or shown as text when there is no image' },
+      { name: 'img', label: 'Image path', type: 'url', hint: 'e.g. /logos/txg.webp. Leave empty to show the name.' },
+      { name: 'invert', label: 'Invert in dark mode', type: 'checkbox', hint: 'For dark logos on a transparent background' },
+    ],
+  },
+  skills('production-skills', 'PRODUCTION'),
   {
     key: 'projects',
     label: 'Projects',
     model: 'project',
+    // GitHub links are hidden for now, so they never leave the server
+    publicOmit: { github: true },
     title: (row) => row.title,
     fields: [
       { name: 'title', label: 'Title', type: 'text', required: true },
       { name: 'description', label: 'Description', type: 'textarea', required: true },
       { name: 'tech', label: 'Tech', type: 'list', hint: 'One per line' },
-      { name: 'github', label: 'GitHub URL', type: 'url' },
+      { name: 'github', label: 'GitHub URL', type: 'url', hint: 'Not shown on the site for now' },
       { name: 'demo', label: 'Live URL', type: 'url' },
-      { name: 'position', label: 'Sort position', type: 'number' },
     ],
   },
-  {
-    key: 'skills',
-    label: 'Skill groups',
-    model: 'skillGroup',
-    title: (row) => row.category,
-    fields: [
-      { name: 'category', label: 'Category', type: 'text', required: true },
-      { name: 'skills', label: 'Skills', type: 'list', required: true, hint: 'One per line' },
-      { name: 'position', label: 'Sort position', type: 'number' },
-    ],
-  },
+  skills('skills', 'HOME'),
   {
     key: 'courses',
     label: 'Coursework',
@@ -92,21 +118,28 @@ export const CONTENT_TYPES = [
       { name: 'code', label: 'Course code', type: 'text', required: true },
       { name: 'name', label: 'Course name', type: 'text', required: true },
       { name: 'grade', label: 'Grade', type: 'number', required: true },
-      { name: 'position', label: 'Sort position', type: 'number' },
     ],
   },
-  facts('about-facts', 'About facts', 'ABOUT'),
-  facts('education-facts', 'Education facts', 'EDUCATION'),
+  facts('about-facts', 'Facts', 'ABOUT'),
+  facts('education-facts', 'Facts', 'EDUCATION'),
   {
-    key: 'settings',
-    label: 'Page text',
-    model: 'setting',
-    idField: 'key',
-    orderBy: { key: 'asc' },
-    title: (row) => row.key,
+    key: 'positions',
+    label: 'Positions',
+    model: 'position',
+    title: (row) => row.title,
     fields: [
-      { name: 'key', label: 'Key', type: 'text', required: true },
-      { name: 'value', label: 'Text', type: 'textarea', required: true },
+      { name: 'title', label: 'Position', type: 'text', required: true, hint: 'The top tile is first preference' },
+      { name: 'body', label: 'Statement', type: 'textarea', required: true },
+    ],
+  },
+  {
+    key: 'secsoc-photos',
+    label: 'Photos',
+    model: 'photo',
+    title: (row) => row.caption || row.src,
+    fields: [
+      { name: 'src', label: 'Image path', type: 'text', required: true, hint: 'e.g. /images/AV.jpg' },
+      { name: 'caption', label: 'Caption', type: 'text', required: true, hint: 'Also used as alt text' },
     ],
   },
 ]
@@ -127,6 +160,7 @@ export function coerce(field, raw) {
     const n = Number(raw)
     return Number.isFinite(n) ? Math.trunc(n) : 0
   }
+  if (field.type === 'checkbox') return raw === 'on'
   const value = String(raw ?? '').trim()
   if ((field.type === 'url') && value === '') return null
   return value
@@ -135,6 +169,7 @@ export function coerce(field, raw) {
 // prisma value -> textarea/input value
 export function present(field, value) {
   if (field.type === 'list') return (value ?? []).join('\n')
+  if (field.type === 'checkbox') return Boolean(value)
   return value ?? ''
 }
 

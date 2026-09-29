@@ -1,5 +1,5 @@
 // Seeds the content that used to be hardcoded in the components.
-// Each table is only filled when it is empty, so running this on every deploy
+// Each list is only filled when it is empty, so running this on every deploy
 // never clobbers edits made in /admin.
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@prisma/client'
@@ -280,52 +280,62 @@ const educationFacts = [
   { label: 'Focus', value: 'Cybersecurity & Systems' },
 ]
 
-const settings = [
-  { key: 'hero.subtitle', value: 'Computer Science Student' },
+const productionSkills = [
+  { category: 'Broadcast Software', skills: ['vMix', 'OBS', 'NDI', 'FFMPEG', 'Replay Systems'] },
+  { category: 'Signal Chain', skills: ['Multi-Camera', 'Audio Routing', 'OMT Video Feeds', 'Signal Flow Design'] },
+  { category: 'Networking', skills: ['Network Patching', 'NDI Distribution', 'Fibre Setup', 'Domain Integration'] },
+  { category: 'Event Production', skills: ['Runsheet Creation', 'Production Meetings', 'Contingency Planning', 'Logistics'] },
+  { category: 'Hardware & Setup', skills: ['AV Rigging', 'Equipment Transport', 'Inventory Management', 'Cabling'] },
+]
+
+const productionOrgs = [
   {
-    key: 'hero.description',
-    value:
-      'Passionate about cybersecurity, gaming, and live production. Currently studying CS at UNSW and always seeking new opportunities to learn and do cool stuff.',
+    org: 'UNSW ESports Society',
+    period: 'Dec 2025 – Present',
+    roles: ['Producer', 'Replay Operator', 'POV Observer', 'Cinematic Observer'],
   },
   {
-    key: 'about.intro',
-    value:
-      "Hi! I'm Maahir! - A Computer Science student at UNSW and Treasurer of both SecSoc and PCSoc. I've spent the last year managing society finances, running hardware workshops, directing live esports broadcasts. I like understanding how systems work at every level, from software all the way down to the silicon.",
-  },
-  {
-    key: 'about.bullets',
-    value: [
-      'Managed a $20,000 annual budget and $10,000+ in sponsorship at SecSoc',
-      'Deployed Vaultwarden & Snipe-IT for PCSoc, overhauling asset management on $100k+ of equipment',
-      'Directed end-to-end production for Oceanic Prodigies RE:BIRTH as Production Lead / Technical Director',
-    ].join('\n'),
-  },
-  {
-    key: 'about.outro',
-    value:
-      'Outside of all that I love tinkering with electronics, rock climbing, competing in CTF competitions, and finding bargains on OzBargain.',
-  },
-  {
-    key: 'education.intro',
-    value:
-      "I'm studying a Bachelor of Computer Science at UNSW Sydney, with a core focus on cybersecurity. Beyond coursework, I've channelled my interest in production and hardware through the university's security and computing societies.",
-  },
-  {
-    key: 'education.bullets',
-    value: [
-      'Core coursework: Algorithms & Data Structures, Systems Programming, Software Engineering',
-      'Active in university cybersecurity competitions (CTFs) and hardware design projects',
-      'Serving as Treasurer for two university societies simultaneously since October 2025',
-    ].join('\n'),
+    org: 'Oceanic Prodigies',
+    period: 'Jul 2025 – Present',
+    roles: ['Production Lead', 'Technical Director', 'Producer'],
   },
 ]
+
+const logos = [
+  { name: 'UNSW ESports Society', img: '/logos/unsw-esports.webp' },
+  { name: 'UNSW', img: '/logos/unsw.png', invert: true },
+  { name: 'Oceanic Prodigies', img: null },
+  { name: 'TXG', img: '/logos/txg.webp' },
+  { name: 'WaveOCE', img: '/logos/waveoce.webp', invert: true },
+  { name: 'AUEC', img: null },
+]
+
+const positions = [
+  {
+    title: 'Vice President of Internals',
+    body: "As VP Internals, I want to make joining SecSoc's committee easy and ensure things run smooth internally. Helping everyone internally work with each other cohesively is something I aspire to have throughout the entire year. I'll run meetings with proper agendas and minutes, keep the membership list, club papers and Arc forms up to date, and coordinate elections with the Returning Officer. This would also work well with my other role as Secretary in PC Society as both roles have similar responsibilities.",
+  },
+  {
+    title: 'Vice President of Technicals',
+    body: "As VP Technicals, I'd look after the infrastructure behind our events, internals and community. I already have a solid understanding of the current infrastructure in place, including all of the internal tools/programs, and am familiar with how to manage everything within Azure. Keeping systems secure, reliable and cheap to run is something I do both for 2 different societies as well as myself. I'd also ensure to document everything as I go, so the next person can carry on our infrastructure.",
+  },
+]
+
+const photos = [
+  { src: '/images/SecSocProjects2025.jpg', caption: 'Projects subcommittee, 2025' },
+  { src: '/images/AV.jpg', caption: 'Running AV for SCONES' },
+  { src: '/images/SecSoc2025.jpg', caption: 'SecSoc, 2025' },
+]
+
+// Section text needs no seeding: src/lib/pages.js holds the defaults.
 
 function positioned(rows, extra = {}) {
   return rows.map((row, index) => ({ ...row, ...extra, position: index }))
 }
 
-async function fill(model, rows, label) {
-  const existing = await prisma[model].count()
+// Fills one list (a table, or one section of a shared table) only if it is empty
+async function fill(model, rows, label, where = {}) {
+  const existing = await prisma[model].count({ where })
   if (existing > 0) {
     console.log(`skip ${label}: ${existing} row(s) already present`)
     return
@@ -335,23 +345,20 @@ async function fill(model, rows, label) {
 }
 
 async function main() {
-  const timeline = [
-    ...positioned(experience, { section: 'EXPERIENCE' }),
-    ...positioned(societies, { section: 'SOCIETY' }),
-    ...positioned(volunteering, { section: 'VOLUNTEERING' }),
-  ]
-  const allFacts = [
-    ...positioned(aboutFacts, { section: 'ABOUT' }),
-    ...positioned(educationFacts, { section: 'EDUCATION' }),
-  ]
-
-  await fill('timelineEntry', timeline, 'timeline entries')
+  await fill('timelineEntry', positioned(experience, { section: 'EXPERIENCE' }), 'experience', { section: 'EXPERIENCE' })
+  await fill('timelineEntry', positioned(societies, { section: 'SOCIETY' }), 'societies', { section: 'SOCIETY' })
+  await fill('timelineEntry', positioned(volunteering, { section: 'VOLUNTEERING' }), 'volunteering', { section: 'VOLUNTEERING' })
+  await fill('fact', positioned(aboutFacts, { section: 'ABOUT' }), 'about facts', { section: 'ABOUT' })
+  await fill('fact', positioned(educationFacts, { section: 'EDUCATION' }), 'education facts', { section: 'EDUCATION' })
+  await fill('skillGroup', positioned(skillGroups, { section: 'HOME' }), 'skill groups', { section: 'HOME' })
+  await fill('skillGroup', positioned(productionSkills, { section: 'PRODUCTION' }), 'production skills', { section: 'PRODUCTION' })
   await fill('production', positioned(productions), 'productions')
+  await fill('productionOrg', positioned(productionOrgs), 'production organisations')
+  await fill('logo', positioned(logos), 'logos')
   await fill('project', positioned(projects), 'projects')
-  await fill('skillGroup', positioned(skillGroups), 'skill groups')
   await fill('course', positioned(courses), 'courses')
-  await fill('fact', allFacts, 'facts')
-  await fill('setting', settings, 'settings')
+  await fill('position', positioned(positions), 'secsoc positions')
+  await fill('photo', positioned(photos), 'secsoc photos')
 }
 
 main()

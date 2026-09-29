@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getContentType, present } from '../../../../../lib/content-types'
 import { prisma } from '../../../../../lib/db'
+import { adminPathOf } from '../../../../../lib/pages'
 import EditForm from '../../../EditForm'
 import { remove } from '../../../actions'
 
@@ -13,11 +14,10 @@ export default async function EditPage({ params }) {
   if (!type) notFound()
 
   const creating = id === 'new'
-  const idField = type.idField ?? 'id'
 
   let row = null
   if (!creating) {
-    row = await prisma[type.model].findUnique({ where: { [idField]: decodeURIComponent(id) } })
+    row = await prisma[type.model].findUnique({ where: { id } })
     if (!row) notFound()
   }
 
@@ -29,18 +29,18 @@ export default async function EditPage({ params }) {
     <>
       <div className="admin-header">
         <h1>{creating ? `New ${type.label.toLowerCase()}` : type.title(row)}</h1>
-        <Link href={`/admin/${type.key}`} className="admin-link-button">Back</Link>
+        <Link href={adminPathOf(type.key)} className="admin-link-button">Back</Link>
       </div>
 
       <EditForm
         typeKey={type.key}
-        id={creating ? 'new' : decodeURIComponent(id)}
+        id={id}
         fields={type.fields}
         values={values}
       />
 
       {!creating && (
-        <form action={remove.bind(null, type.key, decodeURIComponent(id))} className="admin-danger">
+        <form action={remove.bind(null, type.key, id)} className="admin-danger">
           <button type="submit">Delete</button>
         </form>
       )}

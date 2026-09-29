@@ -1,21 +1,16 @@
+import { getContentType } from './content-types'
 import { prisma } from './db'
+import { highlightPython } from './highlight'
+import { getPage, orderKey, sectionOrder, settingKey } from './pages'
 
 const byPosition = { position: 'asc' }
 
-async function settingsMap() {
+export async function settingsMap() {
   const rows = await prisma.setting.findMany()
   return Object.fromEntries(rows.map((row) => [row.key, row.value]))
 }
 
-function timeline(section) {
-  return prisma.timelineEntry.findMany({ where: { section }, orderBy: byPosition })
-}
-
-function facts(section) {
-  return prisma.fact.findMany({ where: { section }, orderBy: byPosition })
-}
-
-// Multi-line settings hold one bullet per line.
+// Multi-line settings hold one item per line.
 export function lines(value) {
   return String(value ?? '')
     .split('\n')
@@ -23,52 +18,48 @@ export function lines(value) {
     .filter(Boolean)
 }
 
-export async function getHomeContent() {
-  const [projects, skills, experience, aboutFacts, map] = await Promise.all([
-    // GitHub links are hidden for now, so they never leave the server
-    prisma.project.findMany({ orderBy: byPosition, omit: { github: true } }),
-    prisma.skillGroup.findMany({ orderBy: byPosition }),
-    timeline('EXPERIENCE'),
-    facts('ABOUT'),
-    settingsMap(),
-  ])
-  return {
-    projects,
-    skills,
-    experience,
-    aboutFacts,
-    settings: {
-      heroSubtitle: map['hero.subtitle'] ?? '',
-      heroDescription: map['hero.description'] ?? '',
-      aboutIntro: map['about.intro'] ?? '',
-      aboutOutro: map['about.outro'] ?? '',
-      aboutBullets: lines(map['about.bullets']),
-    },
-  }
+export function paragraphs(value) {
+  return String(value ?? '')
+    .split(/\n\s*\n/)
+    .map((para) => para.trim())
+    .filter(Boolean)
 }
 
-export async function getUniversityContent() {
-  const [societies, volunteering, courses, educationFacts, map] = await Promise.all([
-    timeline('SOCIETY'),
-    timeline('VOLUNTEERING'),
-    prisma.course.findMany({ orderBy: byPosition }),
-    facts('EDUCATION'),
-    settingsMap(),
-  ])
-  return {
-    societies,
-    volunteering,
-    courses,
-    educationFacts,
-    settings: {
-      educationIntro: map['education.intro'] ?? '',
-      educationBullets: lines(map['education.bullets']),
-    },
-  }
+const FORMAT = { lines, paragraphs, code: (value) => highlightPython(value) }
+
+// Raw stored text for one section, falling back to the defaults in pages.js
+export function sectionText(page, section, map) {
+  return Object.fromEntries(
+    section.fields.map((field) => [field.key, map[settingKey(page, section, field)] ?? field.default]),
+  )
 }
 
-export async function getProductions() {
-  return prisma.production.findMany({ orderBy: byPosition })
+// Everything a public page renders: section text (formatted), order and lists
+export async function getPageContent(pageKey) {
+  const page = getPage(pageKey)
+  const typeKeys = [...new Set(page.sections.flatMap((s) => s.lists ?? []))]
+
+  const [map, ...rows] = await Promise.all([
+    settingsMap(),
+    ...typeKeys.map((key) => {
+      const type = getContentType(key)
+      return prisma[type.model].findMany({ where: type.scope ?? {}, orderBy: byPosition, omit: type.publicOmit })
+    }),
+  ])
+
+  const text = {}
+  for (const section of page.sections) {
+    const raw = sectionText(page, section, map)
+    text[section.key] = Object.fromEntries(
+      section.fields.map((field) => [field.key, (FORMAT[field.type] ?? String)(raw[field.key])]),
+    )
+  }
+
+  return {
+    order: sectionOrder(page, map[orderKey(page)]),
+    text,
+    lists: Object.fromEntries(typeKeys.map((key, i) => [key, rows[i]])),
+  }
 }
 
 export async function getProduction(slug) {

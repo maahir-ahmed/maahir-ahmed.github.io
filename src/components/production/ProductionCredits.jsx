@@ -1,17 +1,4 @@
-const ORGS = [
-  {
-    org: 'UNSW ESports Society',
-    period: 'Dec 2025 – Present',
-    roles: ['Producer', 'Replay Operator', 'POV Observer', 'Cinematic Observer'],
-  },
-  {
-    org: 'Oceanic Prodigies',
-    period: 'Jul 2025 – Present',
-    roles: ['Production Lead', 'Technical Director', 'Producer'],
-  },
-];
-
-export default function ProductionCredits({ productions = [] }) {
+export default function ProductionCredits({ text, orgs = [], productions = [] }) {
   const grouped = productions.reduce((acc, item) => {
     (acc[item.year] = acc[item.year] || []).push(item);
     return acc;
@@ -21,13 +8,13 @@ export default function ProductionCredits({ productions = [] }) {
   return (
     <section id="credits">
       <div className="container">
-        <h2 className="section-title">My work</h2>
+        <h2 className="section-title">{text.title}</h2>
         <div className="credits-grouped">
           <div className="credits-year-block">
-            <h3 className="credits-year-label">Current organisations</h3>
+            <h3 className="credits-year-label">{text.orgsTitle}</h3>
             <dl className="spec-list">
-              {ORGS.map(entry => (
-                <div key={entry.org}>
+              {orgs.map(entry => (
+                <div key={entry.id}>
                   <dt>
                     {entry.period.includes('Present') && <span className="tally" aria-label="Current" />}
                     {entry.org}

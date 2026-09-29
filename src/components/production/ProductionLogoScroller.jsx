@@ -1,20 +1,6 @@
-const LOGOS = [
-  { name: 'UNSW ESports Society', img: '/logos/unsw-esports.webp'              },
-  { name: 'UNSW',                 img: '/logos/unsw.png', invert: true         },
-  { name: 'Oceanic Prodigies',    img: null                       },
-  { name: 'TXG',                  img: '/logos/txg.webp'          },
-  { name: 'WaveOCE',              img: '/logos/waveoce.webp', invert: true },
-  { name: 'AUEC',                 img: null                       },
-  { name: 'UNSW ESports Society', img: '/logos/unsw-esports.webp'              },
-  { name: 'UNSW',                 img: '/logos/unsw.png', invert: true         },
-  { name: 'Oceanic Prodigies',    img: null                       },
-  { name: 'TXG',                  img: '/logos/txg.webp'          },
-  { name: 'WaveOCE',              img: '/logos/waveoce.webp', invert: true },
-  { name: 'AUEC',                 img: null                       },
-];
-
-export default function ProductionLogoScroller() {
-  const items = [...LOGOS, ...LOGOS];
+export default function ProductionLogoScroller({ logos = [] }) {
+  // Four copies: the track loops by scrolling a quarter of its width (one copy)
+  const items = [...logos, ...logos, ...logos, ...logos];
 
   return (
     <div className="logo-scroller-wrapper">

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { clearFailures, recordFailure, throttle, verifyPassword } from '../../lib/auth'
 import { coerce, getContentType, validate } from '../../lib/content-types'
 import { prisma } from '../../lib/db'
+import { adminPathOf, getPage, getSection, orderKey, sectionOrder, settingKey } from '../../lib/pages'
 import { endSession, requireAdmin, startSession } from '../../lib/session'
 
 async function clientKey() {
@@ -37,10 +38,6 @@ export async function logout() {
   redirect('/admin/login')
 }
 
-function idFieldOf(type) {
-  return type.idField ?? 'id'
-}
-
 export async function save(typeKey, id, _prev, formData) {
   await requireAdmin()
 
@@ -55,25 +52,21 @@ export async function save(typeKey, id, _prev, formData) {
   const errors = validate(type, data)
   if (errors.length) return { error: errors.join('. ') }
 
-  const idField = idFieldOf(type)
-  const creating = id === 'new'
-
-  // The id column is user-supplied for key/value settings, generated everywhere
-  // else, so never let a generated id be overwritten by form data.
-  if (!creating && idField === 'id') delete data[idField]
-
   try {
-    if (creating) {
+    if (id === 'new') {
+      // New items go to the end of their list
+      const { _max } = await prisma[type.model].aggregate({ where: type.scope ?? {}, _max: { position: true } })
+      data.position = (_max.position ?? -1) + 1
       await prisma[type.model].create({ data: { ...data, ...(type.scope ?? {}) } })
     } else {
-      await prisma[type.model].update({ where: { [idField]: id }, data })
+      await prisma[type.model].update({ where: { id }, data })
     }
   } catch (error) {
-    if (error?.code === 'P2002') return { error: 'That slug or key is already used.' }
+    if (error?.code === 'P2002') return { error: 'That slug is already used.' }
     throw error
   }
 
-  redirect(`/admin/${typeKey}`)
+  redirect(adminPathOf(typeKey))
 }
 
 export async function remove(typeKey, id) {
@@ -82,6 +75,56 @@ export async function remove(typeKey, id) {
   const type = getContentType(typeKey)
   if (!type) return
 
-  await prisma[type.model].delete({ where: { [idFieldOf(type)]: id } })
-  redirect(`/admin/${typeKey}`)
+  await prisma[type.model].delete({ where: { id } })
+  redirect(adminPathOf(typeKey))
+}
+
+const isIdList = (ids) => Array.isArray(ids) && ids.every((id) => typeof id === 'string')
+
+// Dragged tiles: ids in their new order. Scoped, so a stray id from another
+// list can never be moved.
+export async function reorder(typeKey, ids) {
+  await requireAdmin()
+
+  const type = getContentType(typeKey)
+  if (!type || !isIdList(ids)) return
+
+  await prisma.$transaction(
+    ids.map((id, position) =>
+      prisma[type.model].updateMany({ where: { id, ...(type.scope ?? {}) }, data: { position } }),
+    ),
+  )
+}
+
+export async function reorderSections(pageKey, keys) {
+  await requireAdmin()
+
+  const page = getPage(pageKey)
+  if (!page || !isIdList(keys)) return
+
+  // Only accept an exact rearrangement of the page's movable sections
+  const movable = sectionOrder(page)
+  if (keys.length !== movable.length || !movable.every((key) => keys.includes(key))) return
+
+  const key = orderKey(page)
+  const value = keys.join(',')
+  await prisma.setting.upsert({ where: { key }, create: { key, value }, update: { value } })
+}
+
+export async function saveText(pageKey, sectionKey, _prev, formData) {
+  await requireAdmin()
+
+  const page = getPage(pageKey)
+  const section = getSection(page, sectionKey)
+  if (!section) return { error: 'Unknown section.' }
+
+  await prisma.$transaction(
+    section.fields.map((field) => {
+      const key = settingKey(page, section, field)
+      const value = String(formData.get(field.key) ?? '').replace(/\r\n/g, '\n')
+      return prisma.setting.upsert({ where: { key }, create: { key, value }, update: { value } })
+    }),
+  )
+
+  return { saved: Date.now() }
 }
