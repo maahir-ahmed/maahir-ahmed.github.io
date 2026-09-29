@@ -49,13 +49,17 @@ export default function PixelCat({ hint = CTF_HINT }) {
   const [talking, setTalking] = useState(false);
   const timer = useRef(null);
 
-  useEffect(() => () => clearTimeout(timer.current), []);
-
   const meow = () => {
     setTalking(true);
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setTalking(false), 5000);
   };
+
+  // Hop and speak once on its own shortly after load, so people notice it
+  useEffect(() => {
+    timer.current = setTimeout(meow, 1500);
+    return () => clearTimeout(timer.current);
+  }, []);
 
   return (
     <div className="pixel-cat">
