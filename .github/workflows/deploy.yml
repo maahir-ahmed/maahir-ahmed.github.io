@@ -38,6 +38,7 @@ jobs:
           cd "$DEPLOY_DIR"
           git fetch --prune origin
           git reset --hard origin/main
+          docker compose build --pull
           docker compose up -d --build --remove-orphans
 
       - name: Wait for the site to answer
