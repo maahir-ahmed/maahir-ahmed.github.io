@@ -15,12 +15,15 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
-    "@prisma/adapter-pg": "^7.9.0",
-    "@prisma/client": "^7.9.0",
+    "@prisma/adapter-pg": "^7.10.1",
+    "@prisma/client": "^7.10.1",
     "next": "^15.0.0",
     "pg": "^8.22.0",
-    "prisma": "^7.9.0",
+    "prisma": "^7.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
