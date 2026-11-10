@@ -171,8 +171,11 @@ export function coerce(field, raw) {
       .filter(Boolean)
   }
   if (field.type === 'number') {
-    const n = Number(raw)
-    return Number.isFinite(n) ? Math.trunc(n) : 0
+    // Blank or non-numeric becomes null so required-field validation catches it;
+    // Number('') would otherwise store a silent 0 (a year-0 production).
+    const value = String(raw ?? '').trim()
+    const n = Number(value)
+    return value !== '' && Number.isFinite(n) ? Math.trunc(n) : null
   }
   if (field.type === 'checkbox') return raw === 'on'
   const value = String(raw ?? '').trim()
