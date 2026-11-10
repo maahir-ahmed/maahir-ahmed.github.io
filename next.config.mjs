@@ -5,6 +5,21 @@ const nextConfig = {
   // trailingSlash is deliberately off. It was on to match the old static
   // export, but it redirects /api/ctf to /api/ctf/, which route handlers do
   // not match — every API route 404s. Old links just take one 308 hop.
+  poweredByHeader: false,
+  // No CSP here: the inline theme script, EmailJS and Google Fonts would each
+  // need an allowance, and nothing on the site renders user-supplied HTML.
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+        ],
+      },
+    ]
+  },
   async rewrites() {
     return [
       // Cloudflare serves its own managed robots.txt for this zone, so the
