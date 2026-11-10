@@ -135,7 +135,7 @@ export const PROGRESS_COOKIE = 'ctf_progress'
 export function encodeProgress(ids) {
   const clean = [...new Set(ids)].filter((id) => VALID_IDS.has(id))
   const payload = Buffer.from(JSON.stringify(clean)).toString('base64url')
-  return `${payload}.${sign(payload)}`
+  return `${payload}.${sign('ctf', payload)}`
 }
 
 export function decodeProgress(cookie) {
@@ -143,7 +143,7 @@ export function decodeProgress(cookie) {
   const [payload, signature] = cookie.split('.')
   if (!payload || !signature) return []
 
-  const expected = Buffer.from(sign(payload))
+  const expected = Buffer.from(sign('ctf', payload))
   const given = Buffer.from(signature)
   if (expected.length !== given.length) return []
   if (!timingSafeEqual(expected, given)) return []

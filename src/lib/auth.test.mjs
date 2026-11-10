@@ -44,6 +44,11 @@ test('an expired token is rejected', () => {
   assert.equal(verifyToken(token), false)
 })
 
+test('a signature from another purpose never verifies as an admin session', async () => {
+  const { encodeProgress } = await import('./ctf.js')
+  assert.equal(verifyToken(encodeProgress(['source'])), false)
+})
+
 test('malformed tokens are rejected instead of throwing', () => {
   for (const junk of ['', 'a', 'a.b', '.', undefined, null, 42, 'a.b.c']) {
     assert.equal(verifyToken(junk), false)

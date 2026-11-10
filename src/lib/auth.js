@@ -32,15 +32,17 @@ export function verifyPassword(password, stored) {
   return timingSafeEqual(scryptSync(password, salt, KEY_LENGTH), expectedBuf)
 }
 
-export function sign(payload) {
-  return createHmac('sha256', secret()).update(payload).digest('base64url')
+// The purpose is signed along with the payload, so a value signed for one
+// cookie (the CTF progress) can never verify as another (the admin session).
+export function sign(purpose, payload) {
+  return createHmac('sha256', secret()).update(`${purpose}:${payload}`).digest('base64url')
 }
 
 export function createToken(now = Date.now()) {
   const payload = Buffer.from(
     JSON.stringify({ exp: now + MAX_AGE_SECONDS * 1000 }),
   ).toString('base64url')
-  return `${payload}.${sign(payload)}`
+  return `${payload}.${sign('admin', payload)}`
 }
 
 export function verifyToken(token, now = Date.now()) {
@@ -48,7 +50,7 @@ export function verifyToken(token, now = Date.now()) {
   const [payload, signature] = token.split('.')
   if (!payload || !signature) return false
 
-  const expected = Buffer.from(sign(payload))
+  const expected = Buffer.from(sign('admin', payload))
   const given = Buffer.from(signature)
   if (expected.length !== given.length) return false
   if (!timingSafeEqual(expected, given)) return false
