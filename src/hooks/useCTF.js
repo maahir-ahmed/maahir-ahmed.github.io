@@ -28,19 +28,19 @@ function decodeData(text) {
       } catch {
         return ['Invalid Base64 string'];
       }
-    case 'binary':
-      try {
-        const binary = dataStr.replace(/\s/g, '');
-        let result = '';
-        for (let i = 0; i < binary.length; i += 8) {
-          result += String.fromCharCode(parseInt(binary.substr(i, 8), 2));
-        }
-        const lines = [`Decoded: ${result}`];
-        if (result.includes('CTF{')) lines.push('Flag found! Use "flag <flag>" to submit it.');
-        return lines;
-      } catch {
-        return ['Invalid binary string'];
+    case 'binary': {
+      // parseInt never throws: junk gives NaN, which fromCharCode turns into
+      // NUL characters, so validate instead of relying on the catch.
+      const binary = dataStr.replace(/\s/g, '');
+      if (!binary || /[^01]/.test(binary)) return ['Invalid binary string'];
+      let result = '';
+      for (let i = 0; i < binary.length; i += 8) {
+        result += String.fromCharCode(parseInt(binary.substr(i, 8), 2));
       }
+      const lines = [`Decoded: ${result}`];
+      if (result.includes('CTF{')) lines.push('Flag found! Use "flag <flag>" to submit it.');
+      return lines;
+    }
     default:
       return ['Supported types: base64, binary', 'Usage: decode <type> <data>'];
   }
@@ -49,7 +49,10 @@ function decodeData(text) {
 function cipherData(text) {
   const [type, shift, ...data] = text.split(' ');
   if (type === 'caesar') {
-    const shiftNum = parseInt(shift) || 13;
+    // 13 only when the shift is missing or junk: `caesar 0` must mean 0, and a
+    // negative shift must wrap rather than produce punctuation.
+    const parsed = Number.parseInt(shift, 10);
+    const shiftNum = (((Number.isNaN(parsed) ? 13 : parsed) % 26) + 26) % 26;
     let result = '';
     for (const char of data.join(' ')) {
       if (/[a-zA-Z]/.test(char)) {
