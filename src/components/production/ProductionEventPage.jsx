@@ -10,20 +10,9 @@ const NAV_LINKS = [
   { href: '/',           label: 'Tech Portfolio' },
 ];
 
+// No not-found branch: the page calls notFound() before rendering this.
 export default function ProductionEventPage({ production }) {
   const { theme, toggleTheme } = useTheme();
-
-  if (!production) {
-    return (
-      <>
-        <Navbar theme={theme} toggleTheme={toggleTheme} navLinks={NAV_LINKS} />
-        <main style={{ padding: '8rem 2rem 4rem', textAlign: 'center' }}>
-          <p style={{ color: 'var(--text-secondary)' }}>Event not found.</p>
-        </main>
-        <Footer />
-      </>
-    );
-  }
 
   return (
     <>
