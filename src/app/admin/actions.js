@@ -66,7 +66,10 @@ export async function save(typeKey, id, _prev, formData) {
       data.position = (_max.position ?? -1) + 1
       await prisma[type.model].create({ data: { ...data, ...(type.scope ?? {}) } })
     } else {
-      await prisma[type.model].update({ where: { id }, data })
+      // Scoped like reorder(), so an id from another section of a shared table
+      // can't be edited through the wrong form. Count 0 = deleted in another tab.
+      const { count } = await prisma[type.model].updateMany({ where: { id, ...(type.scope ?? {}) }, data })
+      if (count === 0) return { error: 'Not found. It may have been deleted in another tab.' }
     }
   } catch (error) {
     if (error?.code === 'P2002') return { error: 'That slug or name is already used.' }
@@ -93,7 +96,8 @@ export async function remove(typeKey, id) {
   const type = getContentType(typeKey)
   if (!type) return
 
-  await prisma[type.model].delete({ where: { id } })
+  // deleteMany: scoped like save(), and a row already gone is not an error
+  await prisma[type.model].deleteMany({ where: { id, ...(type.scope ?? {}) } })
   redirect(adminPathOf(typeKey))
 }
 
