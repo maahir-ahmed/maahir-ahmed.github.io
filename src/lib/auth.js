@@ -63,25 +63,36 @@ export function verifyToken(token, now = Date.now()) {
 
 // Single-process throttle. The app runs as one container; if it is ever scaled
 // out this needs to move to the database.
+//
+// The global cap exists because the per-key limit alone is spoofable: whoever
+// controls their forwarded header controls their key. It also bounds the map,
+// since a refused attempt never records a failure. Every scrypt call runs on
+// the one main thread, so capping failures also caps that work.
 const attempts = new Map()
+let globalRecord = { count: 0, first: 0 }
 const MAX_ATTEMPTS = 5
-const LOCKOUT_MS = 15 * 60 * 1000
+const GLOBAL_MAX_ATTEMPTS = 50
+const WINDOW_MS = 15 * 60 * 1000
+
+const fresh = (record, now) => Boolean(record) && now - record.first < WINDOW_MS
 
 export function throttle(key, now = Date.now()) {
+  if (fresh(globalRecord, now) && globalRecord.count >= GLOBAL_MAX_ATTEMPTS) return false
   const record = attempts.get(key)
-  if (record && record.until > now) return false
-  if (record && record.until <= now) attempts.delete(key)
-  return true
+  if (!fresh(record, now)) {
+    attempts.delete(key)
+    return true
+  }
+  return record.count < MAX_ATTEMPTS
 }
 
 export function recordFailure(key, now = Date.now()) {
-  const record = attempts.get(key) ?? { count: 0, until: 0 }
-  record.count += 1
-  if (record.count >= MAX_ATTEMPTS) {
-    record.until = now + LOCKOUT_MS
-    record.count = 0
-  }
-  attempts.set(key, record)
+  if (!fresh(globalRecord, now)) globalRecord = { count: 0, first: now }
+  globalRecord.count += 1
+  for (const [k, record] of attempts) if (!fresh(record, now)) attempts.delete(k)
+  const record = attempts.get(key)
+  if (fresh(record, now)) record.count += 1
+  else attempts.set(key, { count: 1, first: now })
 }
 
 export function clearFailures(key) {

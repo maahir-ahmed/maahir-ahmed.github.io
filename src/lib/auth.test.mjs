@@ -57,3 +57,18 @@ test('throttle locks out after repeated failures and expires', () => {
   assert.equal(throttle(key), false, 'should be locked out')
   assert.equal(throttle(key, Date.now() + 16 * 60 * 1000), true, 'lockout should expire')
 })
+
+test('partial failure counts expire with the window', () => {
+  const now = Date.now()
+  const key = 'partial-key'
+  for (let i = 0; i < 4; i += 1) recordFailure(key, now)
+  recordFailure(key, now + 16 * 60 * 1000) // a month of quiet, then one typo
+  assert.equal(throttle(key, now + 16 * 60 * 1000), true, 'four stale failures + one fresh must not lock out')
+})
+
+test('spoofed keys cannot dodge the global cap', () => {
+  const now = Date.now() + 60 * 60 * 1000 // clear of the other tests' windows
+  for (let i = 0; i < 50; i += 1) recordFailure(`spoof-${i}`, now)
+  assert.equal(throttle('spoof-new', now), false, 'fresh key must be refused once the global cap is hit')
+  assert.equal(throttle('spoof-new', now + 16 * 60 * 1000), true, 'global cap should expire')
+})

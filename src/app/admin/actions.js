@@ -9,9 +9,11 @@ import { adminPathOf, getPage, getSection, orderKey, sectionOrder, settingKey } 
 import { endSession, requireAdmin, startSession } from '../../lib/session'
 
 async function clientKey() {
+  // Cloudflare sets cf-connecting-ip itself. The FIRST x-forwarded-for value is
+  // whatever the client sent (proxies append), so fall back to the last hop only.
   const list = await headers()
-  const forwarded = list.get('x-forwarded-for') ?? ''
-  return forwarded.split(',')[0].trim() || 'unknown'
+  const hops = (list.get('x-forwarded-for') ?? '').split(',').map((s) => s.trim()).filter(Boolean)
+  return list.get('cf-connecting-ip') ?? hops.at(-1) ?? 'unknown'
 }
 
 export async function login(_prev, formData) {
