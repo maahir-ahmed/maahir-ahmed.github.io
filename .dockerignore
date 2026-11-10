@@ -4,3 +4,6 @@ out
 .git
 .github
 *.md
+# The real .env sits beside the Dockerfile on the server; compose passes the
+# values in, so the image layers must never carry the file itself.
+.env*
