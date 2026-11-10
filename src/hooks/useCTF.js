@@ -74,7 +74,9 @@ export function useCTF(showNotification) {
   const [terminalVisible, setTerminalVisible] = useState(false);
   const [progressVisible, setProgressVisible] = useState(false);
   const [terminalLines, setTerminalLines] = useState(INITIAL_LINES);
-  const [logoClickCount, setLogoClickCount] = useState(0);
+  // A ref, not state: the notification and activation are side effects, and
+  // React may run a state updater twice in development.
+  const logoClicks = useRef(0);
   const celebrated = useRef(false);
 
   const addLines = useCallback((lines) => {
@@ -121,16 +123,14 @@ export function useCTF(showNotification) {
   }, [addLines, applyState]);
 
   const handleLogoClick = useCallback(() => {
-    setLogoClickCount(prev => {
-      const newCount = prev + 1;
-      if (newCount === 5) {
-        showNotification('CTF CHALLENGE UNLOCKED! Cybersecurity mode activated', 'success');
-        setTimeout(activateCTF, 1500);
-        return 0;
-      }
-      showNotification(`${newCount}/5 - Keep clicking the logo...`, 'info');
-      return newCount;
-    });
+    logoClicks.current += 1;
+    if (logoClicks.current === 5) {
+      logoClicks.current = 0;
+      showNotification('CTF CHALLENGE UNLOCKED! Cybersecurity mode activated', 'success');
+      setTimeout(activateCTF, 1500);
+    } else {
+      showNotification(`${logoClicks.current}/5 - Keep clicking the logo...`, 'info');
+    }
   }, [activateCTF, showNotification]);
 
   const processCommand = useCallback(async (command) => {
@@ -293,7 +293,6 @@ export function useCTF(showNotification) {
     terminalVisible,
     progressVisible,
     terminalLines,
-    logoClickCount,
     handleLogoClick,
     processCommand,
     closeTerminal,
