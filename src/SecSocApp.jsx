@@ -1,6 +1,7 @@
 'use client'
 
 import { Fragment, useMemo } from 'react';
+import Link from 'next/link';
 import Navbar from './components/shared/Navbar';
 import Footer from './components/shared/Footer';
 import PixelCat from './components/main/PixelCat';
@@ -105,8 +106,8 @@ export default function SecSocApp({ content }) {
           <h2>{more.title}</h2>
           {more.body.map(para => <p key={para}>{para}</p>)}
           <div className="ss-actions">
-            <a href="/" className="btn btn-primary">{more.primary}</a>
-            <a href="/university" className="btn btn-secondary">{more.secondary}</a>
+            <Link href="/" className="btn btn-primary">{more.primary}</Link>
+            <Link href="/university" className="btn btn-secondary">{more.secondary}</Link>
           </div>
         </div>
       </section>

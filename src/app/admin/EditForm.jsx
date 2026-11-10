@@ -34,7 +34,7 @@ function Field({ field, defaultValue }) {
         </div>
         <label htmlFor={`${field.name}-other`}>Other roles</label>
         <textarea id={`${field.name}-other`} name={field.name} rows={2} defaultValue={other.join('\n')} />
-        <p className="admin-hint">One per line. Shown after the ticked roles, joined with " / ".</p>
+        <p className="admin-hint">One per line. Shown after the ticked roles, joined with &quot; / &quot;.</p>
       </fieldset>
     )
   }

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link';
 import Navbar from '../shared/Navbar';
 import Footer from '../shared/Footer';
 import TournamentLogo from './TournamentLogo';
@@ -21,7 +22,7 @@ export default function ProductionEventPage({ production }) {
         <div className="container">
 
           <div className="event-header">
-            <a href="/production" className="event-back">All productions</a>
+            <Link href="/production" className="event-back">All productions</Link>
             <TournamentLogo production={production} className="event-logo" />
             <p className="event-date">{production.date}</p>
             <h1 className="event-title">{production.event}</h1>

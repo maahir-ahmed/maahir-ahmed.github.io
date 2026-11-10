@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "test": "node --test src/lib/*.test.mjs",
+    "lint": "eslint",
     "db:push": "prisma db push",
     "db:seed": "node prisma/seed.mjs",
     "admin:hash": "node scripts/hash-password.mjs",
@@ -25,5 +26,9 @@
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3"
   }
 }
